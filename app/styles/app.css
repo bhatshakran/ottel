@@ -417,10 +417,9 @@ video {
 }
 
 * {
-  padding: 0;
-  margin: 0;
+  margin: 0px;
   box-sizing: border-box;
-  /* overflow: hidden; */
+  padding: 0px;
 }
 
 *, ::before, ::after {
@@ -517,58 +516,70 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
+.flex {
+  display: flex;
 }
 
-.text-8xl {
-  font-size: 6rem;
-  line-height: 1;
+.justify-between {
+  justify-content: space-between;
 }
 
-.text-red-300 {
-  --tw-text-opacity: 1;
-  color: rgb(252 165 165 / var(--tw-text-opacity));
+.border-b {
+  border-bottom-width: 1px;
 }
 
-/* @font-face { */
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
 
-/* font-family: 'Qaligo'; */
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
 
-/* src: url('/fonts/Qaligo-Elegant-Serif_Youthlab_071220/Qaligo\ Regular\ -\ Demo.otf'); */
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
 
-/* font-display: swap; */
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 
-/* } */
+.font-freebasics {
+  font-family: FreeBasics;
+}
 
-/*  */
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+@font-face {
+  font-family: 'FreeBasics';
+
+  src: url('/fonts/freebasics/Basics\ Serif\ -\ Free.ttf');
+
+  font-display: swap;
+}
 
 /* @font-face { */
 
 /* font-family: 'Wavenhaus Semibold'; */
 
 /* src: url('/fonts/Wavehaus_Sans_Free_Typeface_Graham_Paterson_271219/Wavehaus-95SemiBold.otf'); */
-
-/* font-display: swap; */
-
-/* } */
-
-/* @font-face { */
-
-/* font-family: 'Wavenhaus Bold'; */
-
-/* src: url('/fonts/Wavehaus_Sans_Free_Typeface_Graham_Paterson_271219/Wavehaus-128Bold.otf'); */
-
-/* font-display: swap; */
-
-/* } */
-
-/* @font-face { */
-
-/* font-family: 'Wavenhaus Extrabold'; */
-
-/* src: url('/fonts/Wavehaus_Sans_Free_Typeface_Graham_Paterson_271219/Wavehaus-158ExtraBold.otf'); */
 
 /* font-display: swap; */
 
