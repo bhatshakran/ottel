@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+  }
+}
+
+/* @font-face { */
+/* font-family: 'Qaligo'; */
+/* src: url('/fonts/Qaligo-Elegant-Serif_Youthlab_071220/Qaligo\ Regular\ -\ Demo.otf'); */
+/* font-display: swap; */
+/* } */
+/*  */
+/* @font-face { */
+/* font-family: 'Wavenhaus Semibold'; */
+/* src: url('/fonts/Wavehaus_Sans_Free_Typeface_Graham_Paterson_271219/Wavehaus-95SemiBold.otf'); */
+/* font-display: swap; */
+/* } */
+/* @font-face { */
+/* font-family: 'Wavenhaus Bold'; */
+/* src: url('/fonts/Wavehaus_Sans_Free_Typeface_Graham_Paterson_271219/Wavehaus-128Bold.otf'); */
+/* font-display: swap; */
+/* } */
+/* @font-face { */
+/* font-family: 'Wavenhaus Extrabold'; */
+/* src: url('/fonts/Wavehaus_Sans_Free_Typeface_Graham_Paterson_271219/Wavehaus-158ExtraBold.otf'); */
+/* font-display: swap; */
+/* } */
+
+@layer utilities {
+}
