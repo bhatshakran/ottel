@@ -1,4 +1,5 @@
 import Banner from '~/components/Banner';
+import Features from '~/components/Features';
 import Header from '~/components/Header';
 import Showcase from '~/components/Showcase';
 
@@ -8,6 +9,7 @@ export default function Index() {
       <Header />
       <Banner />
       <Showcase />
+      <Features />
     </main>
   );
 }
