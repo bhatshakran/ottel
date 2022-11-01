@@ -11,7 +11,7 @@ const Reviews: React.FC = () => {
           <h2 className='text-center font-regis text-4xl border-t border-gray-500 mt-16 py-16'>
             What customers are saying
           </h2>
-          <div className='flex flex-wrap items-center relative customers'>
+          <div className='flex flex-wrap justify-between items-center relative customers w-full'>
             <div className='w-1/2 h-full'>
               <div className='border border-secondary pl-2 pt-2 w-24'>
                 <img
@@ -49,10 +49,10 @@ const Reviews: React.FC = () => {
                 </h4>
               </div>
               <div className='sliderbtns ml-6'>
-                <div className='bg-gray-400 w-9'>
+                <div className='bg-gray-400 w-9 cursor-pointer'>
                   <ArrowBackIcon fontSize='large' />
                 </div>
-                <div className='bg-secondary w-9 mt-3'>
+                <div className='bg-secondary w-9 mt-3 cursor-pointer'>
                   <ArrowForwardIcon fontSize='large' />
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import Banner from '~/components/Banner';
 import Features from '~/components/Features';
+import Footer from '~/components/Footer';
 import Header from '~/components/Header';
 import Ingredients from '~/components/Ingredients';
 import Reviews from '~/components/Reviews';
@@ -14,6 +15,7 @@ export default function Index() {
       <Features />
       <Ingredients />
       <Reviews />
+      <Footer />
     </main>
   );
 }
