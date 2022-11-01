@@ -23,7 +23,8 @@ const Banner: React.FC = () => {
 
           <div className=' w-2/5 absolute bottom-0 border-r  border-t border-b border-black border-opacity-40 flex  rounded-tr-sm rounded-br-sm'>
             <p className='font-silka w-2/3  m-8  text-lg  z-10'>
-              Escape the routine and enjoy the height of luxury at Toronto's #1
+              Escape the routine and enjoy the height of luxury at
+              <span className='font-bold'> Toronto's #1 </span>
               luxury resort.
             </p>
             <div className='blurred absolute right-0 top-0 w-3/5 h-full z-0'></div>

@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       colors: {
         backgroundColor: '#fef7f1',
+        secondary: '#f56915',
+        lightorange: '#f9b67d',
       },
       fontFamily: {
         silka: ['Silka'],
