@@ -3,8 +3,12 @@ module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      colors: {
+        backgroundColor: '#fef7f1',
+      },
       fontFamily: {
-        freebasics: ['FreeBasics'],
+        silka: ['Silka'],
+        regis: ['Regis'],
       },
     },
   },
