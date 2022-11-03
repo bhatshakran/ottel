@@ -1,15 +1,11 @@
 import fs from 'fs';
 
 const { readFileSync, writeFileSync } = fs;
-const dataPath = `${process.cwd()}/app/data.hotels.json`;
+const dataPath = `${process.cwd()}/app/data/hotels.json`;
 
-export const read = (
-  returnJSON = false,
-  path = dataPath,
-  encoding = 'utf-8'
-) => {
+export const read = (returnJSON = false, path = dataPath) => {
   try {
-    let data = readFileSync(path, encoding);
+    let data = readFileSync(path, 'utf8');
     return returnJSON ? data : JSON.parse(data);
   } catch (error) {
     console.log({ error });

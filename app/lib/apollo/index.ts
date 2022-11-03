@@ -7,6 +7,14 @@ import { read } from '../../utils/readWrite';
 // that together define the "shape" of queries that are executed against
 // your data.
 export const typeDefs = gql`
+  type Booking {
+    name: String
+  }
+
+  type BookingIndex {
+    rate: Int
+  }
+
   type Hotel {
     _id: String
     title: String
@@ -16,10 +24,10 @@ export const typeDefs = gql`
     country: String
     admin: String
     city: String
-    bookings: Array
-    bookingsIndex: Object
+    bookings: [Booking]
+    bookingsIndex: BookingIndex
     price: String
-    numOfGuest: Number
+    numOfGuest: Int
   }
 
   type Query {
@@ -31,9 +39,9 @@ export const typeDefs = gql`
 // schema. this resolver retrieves books from the "books" array above.
 export const resolvers = {
   Query: {
-    books: () => {
-      const books = read();
-      return books;
+    hotels: () => {
+      const hotels = read();
+      return hotels;
     },
   },
 };
