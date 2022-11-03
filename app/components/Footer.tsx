@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   return (
     <div>
       <Container>
-        <div className='px-4 md:px-0 flex flex-wrap w-full'>
+        <div className=' flex flex-wrap w-full'>
           <div className='w-full md:w-1/2 bg-lightorange p-8'>
             <h3 className='font-regis text-3xl'>Ottelo</h3>
             <p className='font-silka w-96 mt-6'>

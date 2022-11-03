@@ -11,23 +11,23 @@ const Reviews: React.FC = () => {
           <h2 className='text-center font-regis text-4xl border-t border-gray-500 mt-16 py-16'>
             What customers are saying
           </h2>
-          <div className='flex flex-wrap justify-between items-center relative customers w-full'>
-            <div className='w-1/2 h-full'>
-              <div className='border border-secondary pl-2 pt-2 w-24'>
+          <div className='flex flex-wrap justify-between items-center relative customers w-full h-auto gap-y-8'>
+            <div className='w-full md:w-1/2 h-1/2 md:h-full'>
+              <div className='md:border border-secondary pl-2 pt-2 w-24'>
                 <img
                   src='https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560648533/mock/users/user-profile-1_mawp12.jpg'
                   alt=''
                   className='w-full'
                 />
               </div>
-              <div className='border border-secondary pl-2 pt-2 absolute left-32 top-16'>
+              <div className='md:border border-secondary pl-2 pt-2 md:absolute md:left-32 md:top-16'>
                 <img
                   src='https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560649052/mock/users/user-profile-2_arwtdy.jpg'
                   alt=''
                   className='w-32'
                 />
               </div>
-              <div className='border border-secondary pl-2 pt-2 absolute left-80 top-32'>
+              <div className='md:border border-secondary pl-2 pt-2 md:absolute md:left-80 md:top-32'>
                 <img
                   src='https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560649280/mock/users/user-profile-3_omxctk.jpg'
                   alt=''
@@ -35,7 +35,7 @@ const Reviews: React.FC = () => {
                 />
               </div>
             </div>
-            <div className='w-1/2 flex items-center'>
+            <div className='w-full md:w-1/2 h-1/2 md:h-full flex items-center'>
               <div className='w-96'>
                 <p className='font-silka '>
                   It is littered with antiques, art works, a bright red grand
