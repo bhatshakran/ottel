@@ -7,7 +7,7 @@ const Reviews: React.FC = () => {
   return (
     <>
       <Container>
-        <div className='w-full mt-16 pb-16'>
+        <div className='w-full px-4 md:px-0 mt-16 pb-16'>
           <h2 className='text-center font-regis text-4xl border-t border-gray-500 mt-16 py-16'>
             What customers are saying
           </h2>
