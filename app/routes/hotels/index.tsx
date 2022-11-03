@@ -21,6 +21,8 @@ export interface Hotel {
   numOfGuests: number;
 }
 
+const topCities = ['Toronto', 'Dubai', 'Los Angeles', 'London', 'Cancún'];
+
 const query = gql`
   query getHotels {
     hotels(limit: 10) {
@@ -51,11 +53,14 @@ export default function Hotels() {
     <main className='bg-backgroundColor max-h-screen px-8 md:px-0 overflow-y-hidden'>
       {/* <Container> */}
       <div className='flex flex-wrap '>
-        <div className='leftpane w-full md:w-1/2  h-screen px-4 flex justify-center'>
+        <div className='leftpane w-full md:w-1/2  h-screen px-4 flex flex-wrap  justify-center'>
           {/*  <h2 className='font-regis text-6xl'>
               Search for <span className='text-secondary italic'> hotels</span>
             </h2> */}
-          <div className='mt-16  bg-white h-96 p-6 rounded-lg w-2/3 shadow-sm'>
+          <div className='w-full h-1/3 flex justify-center'>
+            <img src='/imgs/svgs/search.svg' alt='' />
+          </div>
+          <div className='bg-white h-96 p-6 rounded-lg w-2/3 shadow-sm'>
             <form action='' className='flex gap-2'>
               <input
                 type='text'
@@ -72,6 +77,22 @@ export default function Hotels() {
                 Search
               </button>
             </form>
+
+            <div className='mt-8'>
+              <h4 className='font-silka text-md '>Top cities: </h4>
+              <div className='flex flex-wrap gap-2 mt-6'>
+                {topCities.map((city: any, idx: number) => {
+                  return (
+                    <div
+                      key='idx'
+                      className='bg-lightorange  p-2 px-3 rounded-full text-sm font-silka text-backgroundColor cursor-pointer hover:bg-white hover:text-secondary hover:border hover:border-secondary transition duration-100 ease-in-out'
+                    >
+                      {city}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
         <div className=' rightpane w-full md:w-1/2 pt-16 overflow-scroll pb-16'>
