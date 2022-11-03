@@ -52,6 +52,9 @@
   .featurecard {
     background: linear-gradient(to bottom, #f56b1591, white);
   }
+  .rightpane {
+    height: 100vh !important;
+  }
 }
 
 @layer utilities {

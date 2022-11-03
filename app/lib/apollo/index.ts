@@ -31,7 +31,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    hotels: [Hotel]
+    hotels(limit: Int): [Hotel]
   }
 `;
 
@@ -39,9 +39,9 @@ export const typeDefs = gql`
 // schema. this resolver retrieves books from the "books" array above.
 export const resolvers = {
   Query: {
-    hotels: () => {
+    hotels: (_: any, { limit }: any) => {
       const hotels = read();
-      return hotels;
+      return hotels.slice(0, limit);
     },
   },
 };

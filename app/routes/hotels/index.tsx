@@ -3,26 +3,92 @@ import { json } from '@remix-run/node';
 import { gql } from '@apollo/client';
 import { useLoaderData } from '@remix-run/react';
 import { graphQLClient } from '~/lib/apollo';
+import HotelCard from '~/components/HotelCard';
+// import Container from '~/components/Container';
+
+export interface Hotel {
+  _id: string;
+  title: string;
+  image: string;
+  host: string;
+  address: string;
+  country: string;
+  admin: string;
+  city: string;
+  bookings: any[];
+  bookingIndex: {};
+  price: string;
+  numOfGuests: number;
+}
 
 const query = gql`
   query getHotels {
-    hotels {
+    hotels(limit: 10) {
       _id
       title
       image
       host
+      address
+      country
+      admin
+      city
+      bookings
+      bookingIndex
+      price
+      numOfGuests
     }
   }
 `;
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data } = await graphQLClient.query({ query });
-  console.log(data);
   return json({ hotels: data.hotels });
 };
 
 export default function Hotels() {
   const { hotels } = useLoaderData();
-  console.log(hotels);
-  return <div>Hotels here</div>;
+  return (
+    <main className='bg-backgroundColor max-h-screen px-8 md:px-0 overflow-y-hidden'>
+      {/* <Container> */}
+      <div className='flex flex-wrap '>
+        <div className='leftpane w-full md:w-1/2  h-screen px-4 flex justify-center'>
+          {/*  <h2 className='font-regis text-6xl'>
+              Search for <span className='text-secondary italic'> hotels</span>
+            </h2> */}
+          <div className='mt-16  bg-white h-96 p-6 rounded-lg w-2/3 shadow-sm'>
+            <form action='' className='flex gap-2'>
+              <input
+                type='text'
+                name=''
+                id=''
+                placeholder='Enter a city'
+                className='bg-transparent border border-lightorange w-full rounded-md px-4 font-silka py-2 focus:outline-none'
+              />
+              <button
+                type='submit'
+                className='bg-secondary text-white px-2 font-silka rounded-md hover:bg-backgroundColor hover:text-secondary hover:border hover:border-secondary'
+              >
+                {' '}
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+        <div className=' rightpane w-full md:w-1/2 pt-16 overflow-scroll pb-16'>
+          <div>
+            <h2 className='font-regis text-5xl'>
+              <span className='italic text-secondary'> Trending</span> suites
+              and apartments
+            </h2>
+          </div>
+          <div className='flex flex-wrap gap-4 mt-12'>
+            {hotels.map((hotel: Hotel) => {
+              return <HotelCard key={hotel._id} data={hotel} />;
+            })}
+          </div>
+        </div>
+      </div>
+      {/* </Container> */}
+    </main>
+  );
 }
