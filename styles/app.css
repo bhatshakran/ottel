@@ -32,6 +32,12 @@
       width: 500px !important;
     }
   }
+  @media only screen and (min-width: 1024px) {
+    .customers {
+      height: 400px !important;
+    }
+  }
+
   .banner {
     height: 100vh;
   }
@@ -45,10 +51,6 @@
 
   .featurecard {
     background: linear-gradient(to bottom, #f56b1591, white);
-  }
-
-  .customers {
-    height: 400px;
   }
 }
 
