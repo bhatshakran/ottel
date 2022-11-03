@@ -13,9 +13,9 @@ const Features: React.FC = () => {
   return (
     <>
       <Container>
-        <div className='border-t border-gray-600 mt-24 py-32 flex flex-col gap-24'>
+        <div className='border-t border-gray-600 mt-24 py-32 flex flex-col gap-24 px-8 md:px-0'>
           <div>
-            <h2 className='text-6xl font-regis'>
+            <h2 className='text-4xl text-center md:text-left md:text-6xl font-regis'>
               Inspired by local{' '}
               <span className='italic text-secondary'>
                 traditions & rich history,{' '}

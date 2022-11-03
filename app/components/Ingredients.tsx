@@ -6,7 +6,7 @@ const Ingredients: React.FC = () => {
   return (
     <>
       <Container>
-        <div className='px-4 sm:px-0 mt-24 flex flex-wrap items-center py-8 gap-y-12'>
+        <div className='px-8 md:px-0 mt-24 flex flex-wrap items-center py-8 gap-y-12'>
           <div className='w-full md:w-1/2'>
             <h2 className='text-4xl font-regis'>
               Fresh local ingredients, delicious global cuisine.
