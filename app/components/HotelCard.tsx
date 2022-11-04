@@ -7,10 +7,9 @@ type HotelType = {
 };
 
 const HotelCard: React.FC<HotelType> = ({ data }: HotelType) => {
-  console.log(data);
   const navigate = useNavigate();
   const goToHotel = () => {
-    navigate(`/hotels/${data._id}`);
+    navigate(`/hotels/${data.id}`);
   };
   return (
     <div
