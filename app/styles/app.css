@@ -1194,6 +1194,27 @@ video {
   outline-offset: 2px;
 }
 
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}
+
+.disabled\:border-none:disabled {
+  border-style: none;
+}
+
+.disabled\:bg-secondary:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 105 21 / var(--tw-bg-opacity));
+}
+
+.disabled\:text-current:disabled {
+  color: currentColor;
+}
+
+.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+
 @media (min-width: 768px) {
   .md\:absolute {
     position: absolute;

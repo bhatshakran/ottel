@@ -1,7 +1,12 @@
-import type { LoaderFunction } from '@remix-run/node';
+import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { gql } from '@apollo/client';
-import { useLoaderData } from '@remix-run/react';
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from '@remix-run/react';
 import { graphQLClient } from '~/lib/apollo';
 import HotelCard from '~/components/HotelCard';
 // import Container from '~/components/Container';
@@ -61,16 +66,41 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json({ hotels: data.hotels });
 };
 
+export const action: ActionFunction = async ({ request }) => {
+  const body = await request.formData();
+  const city = body.get('city');
+  const query = gql`
+    query getHotel($city: String!) {
+      hotel(city: $city) {
+        id
+        title
+        image
+        host
+        address
+        country
+        admin
+        city
+        bookings
+        price
+        numOfGuest
+      }
+    }
+  `;
+
+  const variables = { city: city };
+  const { data } = await graphQLClient.query({ query, variables });
+  return json({ hotel: data.hotel });
+};
+
 export default function Hotels() {
+  const transition = useTransition();
   const { hotels } = useLoaderData();
+  const actionData = useActionData();
   return (
     <main className='bg-backgroundColor max-h-screen px-8 md:px-0 overflow-y-hidden'>
       {/* <Container> */}
       <div className='flex flex-wrap '>
         <div className='leftpane w-full md:w-1/2  h-screen px-4 flex flex-wrap  justify-center'>
-          {/*  <h2 className='font-regis text-6xl'>
-              Search for <span className='text-secondary italic'> hotels</span>
-            </h2> */}
           <div className='w-full h-1/3 flex justify-center'>
             <svg
               id='Layer_1'
@@ -266,22 +296,23 @@ export default function Hotels() {
             </svg>
           </div>
           <div className='bg-white h-96 p-6 rounded-lg w-2/3 shadow-sm'>
-            <form action='' className='flex gap-2'>
+            <Form method='post' className='flex gap-2'>
               <input
                 type='text'
-                name=''
+                name='city'
                 id=''
                 placeholder='Enter a city'
                 className='bg-transparent border border-lightorange w-full rounded-md px-4 font-silka py-2 focus:outline-none'
               />
               <button
                 type='submit'
-                className='bg-secondary text-white px-2 font-silka rounded-md hover:bg-backgroundColor hover:text-secondary hover:border hover:border-secondary'
+                className='bg-secondary text-white px-2 font-silka rounded-md hover:bg-backgroundColor hover:text-secondary hover:border hover:border-secondary disabled:bg-secondary disabled:cursor-not-allowed disabled:text-current disabled:border-none disabled:opacity-50'
+                disabled={transition.state === 'submitting'}
               >
                 {' '}
                 Search
               </button>
-            </form>
+            </Form>
 
             <div className='mt-8'>
               <h4 className='font-silka text-md '>Top cities: </h4>

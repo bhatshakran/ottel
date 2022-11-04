@@ -40,6 +40,7 @@ export const typeDefs = gql`
   type Query {
     hotels(limit: Int): [Hotel]
     users: [User]
+    hotel(city: String): [Hotel]
   }
 `;
 
@@ -65,6 +66,22 @@ export const resolvers = {
       });
 
       return users;
+    },
+
+    hotel: async (_: any, { city }: any) => {
+      console.log(city, 'city goes here');
+      let cities = await prisma.hotel.findMany({
+        where: {
+          city: {
+            contains: city,
+          },
+        },
+        orderBy: {
+          id: 'desc',
+        },
+      });
+
+      return cities;
     },
   },
 };
