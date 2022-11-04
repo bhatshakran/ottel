@@ -7,10 +7,14 @@
     "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@apollo/client": "^3.7.1",
     "@graphql-tools/schema": "^9.0.8",
     "@mui/icons-material": "^5.10.9",
+    "@prisma/client": "^4.5.0",
     "@remix-run/node": "^1.7.4",
     "@remix-run/react": "^1.7.4",
     "@remix-run/serve": "^1.7.4",
@@ -27,6 +31,7 @@
     "concurrently": "^7.5.0",
     "eslint": "^8.23.1",
     "postcss": "^8.4.18",
+    "prisma": "^4.5.0",
     "tailwindcss": "^3.2.1",
     "tailwindcss-debug-screens": "^2.2.1",
     "typescript": "^4.7.4"

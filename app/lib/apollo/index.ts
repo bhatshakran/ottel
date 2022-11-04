@@ -1,22 +1,18 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 import { SchemaLink } from '@apollo/client/link/schema';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { read } from '../../utils/readWrite';
+import prismaclient from '@prisma/client';
 
-// a schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
+const prisma = new prismaclient.PrismaClient();
+
 export const typeDefs = gql`
   type Booking {
-    name: String
-  }
-
-  type BookingIndex {
-    rate: Int
+    bookingId: Int
+    bookerId: Int
   }
 
   type Hotel {
-    _id: String
+    id: Int
     title: String
     image: String
     host: String
@@ -25,13 +21,25 @@ export const typeDefs = gql`
     admin: String
     city: String
     bookings: [Booking]
-    bookingsIndex: BookingIndex
     price: String
     numOfGuest: Int
   }
 
+  type User {
+    id: Int
+    token: String
+    name: String
+    avatar: String
+    contact: String
+    walletId: String
+    income: Int
+    bookings: [Booking]
+    hotels: [Hotel]
+  }
+
   type Query {
     hotels(limit: Int): [Hotel]
+    users: [User]
   }
 `;
 
@@ -39,9 +47,24 @@ export const typeDefs = gql`
 // schema. this resolver retrieves books from the "books" array above.
 export const resolvers = {
   Query: {
-    hotels: (_: any, { limit }: any) => {
-      const hotels = read();
-      return hotels.slice(0, limit);
+    hotels: async (_: any, { limit }: any) => {
+      const hotels = await prisma.hotel.findMany({
+        take: limit,
+        orderBy: {
+          id: 'desc',
+        },
+      });
+
+      return hotels;
+    },
+    users: async (_: any) => {
+      const users = await prisma.user.findMany({
+        orderBy: {
+          id: 'desc',
+        },
+      });
+
+      return users;
     },
   },
 };
