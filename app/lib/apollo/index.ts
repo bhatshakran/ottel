@@ -1,9 +1,9 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
 import { SchemaLink } from '@apollo/client/link/schema';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import prismaclient from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new prismaclient.PrismaClient();
+const prisma = new PrismaClient();
 
 export const typeDefs = gql`
   type Booking {
@@ -40,7 +40,8 @@ export const typeDefs = gql`
   type Query {
     hotels(limit: Int): [Hotel]
     users: [User]
-    hotel(city: String): [Hotel]
+    searchHotels(city: String): [Hotel]
+    getHotel(id: Int): Hotel
   }
 `;
 
@@ -68,8 +69,7 @@ export const resolvers = {
       return users;
     },
 
-    hotel: async (_: any, { city }: any) => {
-      console.log(city, 'city goes here');
+    searchHotels: async (_: any, { city }: any) => {
       let cities = await prisma.hotel.findMany({
         where: {
           city: {
@@ -82,6 +82,16 @@ export const resolvers = {
       });
 
       return cities;
+    },
+
+    getHotel: async (_: any, { id }: any) => {
+      let hotel = await prisma.hotel.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      return hotel;
     },
   },
 };

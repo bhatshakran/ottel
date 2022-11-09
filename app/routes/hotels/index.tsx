@@ -71,8 +71,8 @@ export const action: ActionFunction = async ({ request }) => {
   const body = await request.formData();
   const city = body.get('city');
   const query = gql`
-    query getHotel($city: String!) {
-      hotel(city: $city) {
+    query getHotelsBySearch($city: String!) {
+      searchHotels(city: $city) {
         id
         title
         image
@@ -90,7 +90,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const variables = { city: city };
   const { data } = await graphQLClient.query({ query, variables });
-  return json({ hotels: data.hotel });
+  return json({ hotels: data.searchHotels });
 };
 
 export default function Hotels() {
