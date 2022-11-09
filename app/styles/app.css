@@ -719,6 +719,14 @@ video {
   width: 66.666667%;
 }
 
+.w-1\/5 {
+  width: 20%;
+}
+
+.w-2\/5 {
+  width: 40%;
+}
+
 .max-w-6xl {
   max-width: 72rem;
 }
@@ -803,6 +811,10 @@ video {
 
 .gap-y-8 {
   row-gap: 2rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .overflow-scroll {
@@ -911,6 +923,16 @@ video {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
+.bg-yellow-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 224 71 / var(--tw-bg-opacity));
 }
 
 .object-cover {

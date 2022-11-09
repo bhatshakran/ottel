@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Arrow from './Arrow';
 import Container from './Container';
 
@@ -13,7 +14,7 @@ const Banner: React.FC = () => {
               <br /> Experience peace at Ottelo.
             </h2>
             <button className=' font-silka text-md flex items-center gap-6  justify-center md:justify-start ml-4'>
-              Book a room
+              <Link to='/hotels'>Look for rooms</Link>
               <Arrow />
             </button>
           </div>
