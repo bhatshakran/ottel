@@ -104,9 +104,11 @@ export default function Hotels() {
     const { target } = e;
     if (target) {
       const buttonName = (target as HTMLButtonElement).innerHTML;
-      (formInput as HTMLInputElement).value = buttonName;
-      const inputForm = document.querySelector('form');
-      if (inputForm) inputForm.submit();
+      if (actionData?.hotels[0].city !== buttonName || !actionData) {
+        (formInput as HTMLInputElement).value = buttonName;
+        const inputForm = document.querySelector('form');
+        if (inputForm) inputForm.submit();
+      }
     }
   };
   return (
@@ -337,7 +339,7 @@ export default function Hotels() {
                     <button
                       onClick={(e) => fillSearchInput(e)}
                       key={idx}
-                      className='bg-lightorange  p-2 px-3 rounded-full text-sm font-silka text-backgroundColor cursor-pointer hover:bg-white hover:text-secondary hover:border hover:border-secondary transition duration-100 ease-in-out'
+                      className='bg-white  p-2 px-3 rounded-full text-sm w-full font-silka text-secondary border border-lightorange cursor-pointer hover:bg-secondary hover:text-white  hover:border-secondary transition duration-100 ease-in-out'
                     >
                       {city}
                     </button>
