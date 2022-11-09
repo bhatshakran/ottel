@@ -7,6 +7,9 @@ import Arrow from '~/components/Arrow';
 import Container from '~/components/Container';
 import ImageIcon from '@mui/icons-material/Image';
 import PlaceIcon from '@mui/icons-material/Place';
+import { getCurrentBreakpoint } from '~/lib/utils/getCurrentBreakpoint';
+import React from 'react';
+import Header from '~/components/Header';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
@@ -38,6 +41,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 const Hotel = () => {
   const { hotel } = useLoaderData();
 
+  const addOrRemoveImgEvtListener = React.useCallback(() => {
+    const breakpointValue = getCurrentBreakpoint();
+    console.log(breakpointValue);
+    const img = document.querySelector('.hotel-img');
+    if (breakpointValue === 'sm' || breakpointValue === undefined) {
+      img?.removeEventListener('mouseenter', zoomImg);
+      img?.removeEventListener('mouseleave', unzoomImg);
+    } else {
+      img?.addEventListener('mouseenter', zoomImg);
+      img?.addEventListener('mouseleave', unzoomImg);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    addOrRemoveImgEvtListener();
+    window.addEventListener('resize', addOrRemoveImgEvtListener);
+    return () =>
+      window.removeEventListener('resize', addOrRemoveImgEvtListener);
+  }, [addOrRemoveImgEvtListener]);
+
   const zoomImg = () => {
     const img = document.querySelector('.hotel-img');
     if (img) {
@@ -58,15 +81,16 @@ const Hotel = () => {
   };
 
   return (
-    <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center items-center px-8 py-32 md:px-0 md:py-0'>
+    <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center  px-8  md:px-0 md:py-0'>
       <Container>
-        <div className='flex flex-col justify-center   items-center  '>
-          <div className='font-silka flex items-center gap-2 '>
-            <h6 className='text-xs'>Hover on the image to zoom </h6>
+        <Header />
+        <div className='flex flex-col justify-start md:justify-center  items-center h-full my-24 md:my-0 '>
+          <div className='font-silka  items-center gap-2 hidden md:flex '>
+            <h6 className='text-xs '>Hover on the image to zoom </h6>
             <ImageIcon />
           </div>
-          <div className=' flex flex-wrap justify-center   items-center w-full h-full gap-10'>
-            <div className='w-full md:w-1/4 lg:w-1/4 flex flex-col gap-2 font-silka'>
+          <div className=' flex flex-wrap justify-evenly  items-center w-full h-1/2 gap-10'>
+            <div className='w-full md:w-1/4 lg:w-1/4 flex flex-col gap-4 md:gap-2 font-silka'>
               <h2 className=' text-3xl  w-full text-black font-regis '>
                 {hotel.title}
               </h2>
@@ -88,9 +112,7 @@ const Hotel = () => {
               <img
                 src={hotel.image}
                 alt=''
-                className='hotel-img w-full h-full rounded-md cursor-pointer opacity-80'
-                onMouseEnter={zoomImg}
-                onMouseLeave={unzoomImg}
+                className='hotel-img w-full h-full rounded-md cursor-pointer opacity-100 md:opacity-80'
               />
             </div>
             <div className='w-full md:w-1/4 lg:w-1/4 flex flex-col gap-8  overflow-hidden'>
@@ -118,7 +140,7 @@ const Hotel = () => {
                   />
                 </div>
               </div>
-              <button className=' text-secondary flex items-center p-2 rounded-full font-silka'>
+              <button className='  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white'>
                 Request to book
                 <Arrow />
               </button>
