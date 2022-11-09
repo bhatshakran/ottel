@@ -89,13 +89,14 @@ export const action: ActionFunction = async ({ request }) => {
 
   const variables = { city: city };
   const { data } = await graphQLClient.query({ query, variables });
-  return json({ hotel: data.hotel });
+  return json({ hotels: data.hotel });
 };
 
 export default function Hotels() {
   const transition = useTransition();
   const { hotels } = useLoaderData();
   const actionData = useActionData();
+  console.log(actionData);
   return (
     <main className='bg-backgroundColor max-h-screen px-8 md:px-0 overflow-y-hidden'>
       {/* <Container> */}
@@ -333,16 +334,30 @@ export default function Hotels() {
         </div>
         <div className=' rightpane w-full md:w-1/2 pt-16 overflow-scroll pb-16'>
           <div>
-            <h2 className='font-regis text-5xl'>
-              <span className='italic text-secondary'> Trending</span> suites
-              and apartments
-            </h2>
+            <div className='font-regis text-5xl'>
+              {actionData ? (
+                <h2>
+                  {' '}
+                  <span className='italic text-secondary'>
+                    Search{' '}
+                  </span> results{' '}
+                </h2>
+              ) : (
+                <h2>
+                  <span className='italic text-secondary'> Trending</span>{' '}
+                  suites and apartments
+                </h2>
+              )}
+            </div>
           </div>
           <div className='flex flex-wrap gap-4 mt-12'>
-            {hotels &&
-              hotels.map((hotel: Hotel) => {
-                return <HotelCard key={hotel.id} data={hotel} />;
-              })}
+            {actionData
+              ? actionData.hotels.map((hotel: Hotel) => {
+                  return <HotelCard key={hotel.id} data={hotel} />;
+                })
+              : hotels.map((hotel: Hotel) => {
+                  return <HotelCard key={hotel.id} data={hotel} />;
+                })}
           </div>
         </div>
       </div>
