@@ -9,6 +9,7 @@ import {
 } from '@remix-run/react';
 import { graphQLClient } from '~/lib/apollo';
 import HotelCard from '~/components/HotelCard';
+import React from 'react';
 // import Container from '~/components/Container';
 
 export interface Hotel {
@@ -96,7 +97,18 @@ export default function Hotels() {
   const transition = useTransition();
   const { hotels } = useLoaderData();
   const actionData = useActionData();
-  console.log(actionData);
+  const [cityVal, setCityVal] = React.useState('');
+
+  const fillSearchInput = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const formInput = document.getElementById('cityInput');
+    const { target } = e;
+    if (target) {
+      const buttonName = (target as HTMLButtonElement).innerHTML;
+      (formInput as HTMLInputElement).value = buttonName;
+      const inputForm = document.querySelector('form');
+      if (inputForm) inputForm.submit();
+    }
+  };
   return (
     <main className='bg-backgroundColor max-h-screen px-8 md:px-0 overflow-y-hidden'>
       {/* <Container> */}
@@ -301,9 +313,11 @@ export default function Hotels() {
               <input
                 type='text'
                 name='city'
-                id=''
+                id='cityInput'
                 placeholder='Enter a city'
                 className='bg-transparent border border-lightorange w-full rounded-md px-4 font-silka py-2 focus:outline-none'
+                value={cityVal}
+                onChange={(e) => setCityVal(e.target.value)}
               />
               <button
                 type='submit'
@@ -320,12 +334,13 @@ export default function Hotels() {
               <div className='flex flex-wrap gap-2 mt-6'>
                 {topCities.map((city: any, idx: number) => {
                   return (
-                    <div
+                    <button
+                      onClick={(e) => fillSearchInput(e)}
                       key={idx}
                       className='bg-lightorange  p-2 px-3 rounded-full text-sm font-silka text-backgroundColor cursor-pointer hover:bg-white hover:text-secondary hover:border hover:border-secondary transition duration-100 ease-in-out'
                     >
                       {city}
-                    </div>
+                    </button>
                   );
                 })}
               </div>
