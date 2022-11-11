@@ -618,6 +618,11 @@ video {
   margin-bottom: 6rem;
 }
 
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
 .mt-16 {
   margin-top: 4rem;
 }
@@ -838,6 +843,14 @@ video {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-12 {
+  gap: 3rem;
+}
+
+.gap-9 {
+  gap: 2.25rem;
 }
 
 .gap-y-4 {
@@ -1169,6 +1182,10 @@ video {
   font-weight: 700;
 }
 
+.font-light {
+  font-weight: 300;
+}
+
 .italic {
   font-style: italic;
 }
@@ -1230,6 +1247,11 @@ video {
   color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
+.text-lightorange {
+  --tw-text-opacity: 1;
+  color: rgb(249 182 125 / var(--tw-text-opacity));
+}
+
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -1239,14 +1261,27 @@ video {
   text-underline-offset: 8px;
 }
 
+.opacity-60 {
+  opacity: 0.6;
+}
+
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
 .outline-purple-300 {
   outline-color: #d8b4fe;
+}
+
+.outline-secondary {
+  outline-color: #f56915;
 }
 
 .transition-transform {
@@ -1301,9 +1336,18 @@ video {
   border-width: 1px;
 }
 
+.hover\:border-none:hover {
+  border-style: none;
+}
+
 .hover\:border-secondary:hover {
   --tw-border-opacity: 1;
   border-color: rgb(245 105 21 / var(--tw-border-opacity));
+}
+
+.hover\:border-lightorange:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(249 182 125 / var(--tw-border-opacity));
 }
 
 .hover\:bg-backgroundColor:hover {
@@ -1318,6 +1362,11 @@ video {
 
 .hover\:bg-transparent:hover {
   background-color: transparent;
+}
+
+.hover\:bg-white:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-none:hover {
@@ -1341,6 +1390,11 @@ video {
 
 .hover\:opacity-60:hover {
   opacity: 0.6;
+}
+
+.focus\:border-secondary:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(245 105 21 / var(--tw-border-opacity));
 }
 
 .focus\:outline-none:focus {

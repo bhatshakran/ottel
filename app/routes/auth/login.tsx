@@ -3,6 +3,8 @@ import type { ActionFunction } from '@remix-run/node';
 import { useActionData, useSearchParams } from '@remix-run/react';
 import { createUserSession, login, register } from '~/utils/session.server';
 import { db } from '~/utils/db.server';
+import Container from '~/components/Container';
+import React from 'react';
 
 function validateUsername(name: string) {
   if (typeof name !== 'string' || name.length < 3) {
@@ -28,8 +30,8 @@ const badRequest = (data: any) => json(data, { status: 400 });
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
-  console.log(form);
-  const loginType = form.get('loginType');
+  const loginType = form.get('buttonVal');
+  console.log(loginType);
   const name = form.get('name');
   const password = form.get('password');
   const redirectTo = validateUrl(form.get('redirectTo') || '/');
@@ -90,100 +92,111 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg text-purple-900 outline-purple-300 `;
+const inputClassName = `w-full  border-b border-lightorange px-2 py-1  text-secondary outline-none focus:border-secondary font-light`;
+const buttonClassName = `py-2 px-7   hover:bg-secondary w-full hover:text-white bg-white text-black border-secondary border hover:border-none font-silka`;
+
 const Login = () => {
   const actionData = useActionData();
   const [searchParams] = useSearchParams();
+
+  const [authType, setAuthType] = React.useState('login');
   return (
-    <div className='flex justify-center items-center content-center text-white'>
-      <div className='lg:m-10 my-10 md:w-2/3 lg:w-1/2 bg-gradient-to-br from-purple-500 via-purple-400 to-purple-300  font-bold px-5 py-6 rounded-md'>
-        <form method='post'>
-          <h1 className='text-center text-2xl text-white'>Login</h1>
-          <input
-            type='hidden'
-            name='redirectTo'
-            value={searchParams.get('redirectTo') ?? undefined}
-          />
-          <fieldset className='text-center '>
-            <legend className='sr-only'>Login or Register?</legend>
-            <label>
+    <div className='flex items-center justify-center h-screen bg-white'>
+      <Container>
+        <div className='flex justify-center items-center content-center text-black'>
+          <div className='w-96 bg-white   font-bold px-5 py-6 rounded-md'>
+            <form method='post' className='font-silka'>
+              <h1 className='text-center text-4xl  font-regis  text-secondary'>
+                Ottelo.
+              </h1>
               <input
-                type='radio'
-                name='loginType'
-                value='login'
-                defaultChecked={
-                  !actionData?.fields?.loginType ||
-                  actionData?.fields?.loginType === 'login'
-                }
-              />{' '}
-              Login
-            </label>
-            <label>
-              <input
-                type='radio'
-                name='loginType'
-                value='register'
-                defaultChecked={actionData?.fields?.loginType === 'register'}
-              />{' '}
-              Register
-            </label>
-          </fieldset>
-          <label className='text-lg leading-7 text-white'>
-            Username:
-            <input
-              type='text'
-              className={inputClassName}
-              name='name'
-              required
-              minLength={3}
-              defaultValue={actionData?.fields?.name}
-              aria-invalid={Boolean(actionData?.fieldErrors?.name)}
-              aria-errormessage={
-                actionData?.fieldErrors?.name ? 'name-error' : undefined
-              }
-            />
-            {actionData?.fieldErrors?.username ? (
-              <p className='text-red-500' role='alert' id='name-error'>
-                {actionData.fieldErrors.username}
-              </p>
-            ) : null}
-          </label>
-          <label className='text-lg leading-7 text-white'>
-            Password
-            <input
-              name='password'
-              className={inputClassName}
-              required
-              defaultValue={actionData?.fields?.password}
-              type='password'
-              aria-invalid={
-                Boolean(actionData?.fieldErrors?.password) || undefined
-              }
-              aria-errormessage={
-                actionData?.fieldErrors?.password ? 'password-error' : undefined
-              }
-            />
-            {actionData?.fieldErrors?.password ? (
-              <p className='text-red-500' role='alert' id='password-error'>
-                {actionData.fieldErrors.password}
-              </p>
-            ) : null}
-          </label>
-          <div id='form-error-message'>
-            {actionData?.formError ? (
-              <p className='text-red-500' role='alert'>
-                {actionData.formError}
-              </p>
-            ) : null}
+                type='hidden'
+                name='redirectTo'
+                value={searchParams.get('redirectTo') ?? undefined}
+              />
+              <h3 className='w-full text-center mt-6 opacity-60'>
+                {authType === 'login' ? 'Sign in' : 'Sign up'}
+              </h3>
+
+              <div className='mt-8 flex flex-col gap-9'>
+                <input
+                  type='text'
+                  className={inputClassName}
+                  name='name'
+                  required
+                  placeholder='username'
+                  minLength={3}
+                  defaultValue={actionData?.fields?.name}
+                  aria-invalid={Boolean(actionData?.fieldErrors?.name)}
+                  aria-errormessage={
+                    actionData?.fieldErrors?.name ? 'name-error' : undefined
+                  }
+                />
+                {actionData?.fieldErrors?.username ? (
+                  <p className='text-red-500' role='alert' id='name-error'>
+                    {actionData.fieldErrors.username}
+                  </p>
+                ) : null}
+
+                <input
+                  name='password'
+                  className={inputClassName}
+                  required
+                  defaultValue={actionData?.fields?.password}
+                  type='password'
+                  placeholder='password'
+                  aria-invalid={
+                    Boolean(actionData?.fieldErrors?.password) || undefined
+                  }
+                  aria-errormessage={
+                    actionData?.fieldErrors?.password
+                      ? 'password-error'
+                      : undefined
+                  }
+                />
+                {actionData?.fieldErrors?.password ? (
+                  <p className='text-red-500' role='alert' id='password-error'>
+                    {actionData.fieldErrors.password}
+                  </p>
+                ) : null}
+              </div>
+              <div id='form-error-message'>
+                {actionData?.formError ? (
+                  <p className='text-red-500' role='alert'>
+                    {actionData.formError}
+                  </p>
+                ) : null}
+              </div>
+
+              <button
+                className={`${buttonClassName} mt-8`}
+                type='submit'
+                name='buttonVal'
+                value={authType === 'login' ? 'login' : 'register'}
+              >
+                {authType === 'login' ? 'Login' : 'Register'}
+              </button>
+            </form>
+            <div className='flex flex-col gap-6 mt-12'>
+              <h2 className='opacity-60 font-light font-silka'>
+                {authType === 'login'
+                  ? 'Dont have an account?'
+                  : 'Already have an account?'}
+              </h2>
+              <button
+                className={buttonClassName}
+                onClick={() => {
+                  authType === 'login'
+                    ? setAuthType('register')
+                    : setAuthType('login');
+                }}
+              >
+                {authType === 'login' ? 'Create a new account' : 'Login'}
+              </button>
+            </div>
           </div>
-          <button
-            className='my-4 py-2 px-7 text-purple-500 font-bold border-2 hover:scale-105 border-purple-500 rounded-lg bg-white'
-            type='submit'
-          >
-            Login
-          </button>
-        </form>
-      </div>
+        </div>
+      </Container>
     </div>
   );
 };
