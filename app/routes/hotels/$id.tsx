@@ -2,11 +2,12 @@ import { gql } from '@apollo/client';
 import { graphQLClient } from '~/lib/apollo';
 import { json } from '@remix-run/node';
 import type { LoaderFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import Arrow from '~/components/Arrow';
 import Container from '~/components/Container';
 import PlaceIcon from '@mui/icons-material/Place';
 import Header from '~/components/Header';
+import { getUser } from '~/utils/session.server';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
@@ -32,11 +33,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const variables = { id: hotelId };
 
   const { data } = await graphQLClient.query({ query, variables });
-  return json({ hotel: data.getHotel });
+  const user = await getUser(request);
+
+  return json({ hotel: data.getHotel, user });
 };
 
 const Hotel = () => {
-  const { hotel } = useLoaderData();
+  const { hotel, user } = useLoaderData();
+  console.log(user);
 
   return (
     <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center  px-8 md:py-0'>
@@ -69,36 +73,50 @@ const Hotel = () => {
                   City & Country: {hotel.city}, {hotel.country}
                 </h3>
               </div>
-              <div className='w-full  ml-auto  flex flex-col gap-8  overflow-hidden'>
-                <div className='font-silka flex flex-col gap-6 w-full'>
-                  <div className='flex flex-col'>
-                    <label htmlFor='checkin' className=' font-bold'>
-                      Check in date:
-                    </label>
-                    <input
-                      type='datetime-local'
-                      name='checkinpicker'
-                      id='checkinpicker'
-                      className='focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange'
-                    />
+              {user ? (
+                <div className='w-full  ml-auto  flex flex-col gap-8  overflow-hidden'>
+                  <div className='font-silka flex flex-col gap-6 w-full'>
+                    <div className='flex flex-col'>
+                      <label htmlFor='checkin' className=' font-bold'>
+                        Check in date:
+                      </label>
+                      <input
+                        type='datetime-local'
+                        name='checkinpicker'
+                        id='checkinpicker'
+                        className='focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange'
+                      />
+                    </div>
+                    <div className='flex flex-col'>
+                      <label htmlFor='checkout' className=' font-bold'>
+                        Check out date:
+                      </label>
+                      <input
+                        type='datetime-local'
+                        name='checkoutpicker'
+                        id='checkoutpicker'
+                        className='focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange'
+                      />
+                    </div>
                   </div>
-                  <div className='flex flex-col'>
-                    <label htmlFor='checkout' className=' font-bold'>
-                      Check out date:
-                    </label>
-                    <input
-                      type='datetime-local'
-                      name='checkoutpicker'
-                      id='checkoutpicker'
-                      className='focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange'
-                    />
-                  </div>
+                  <button className='  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white'>
+                    Request to book
+                    <Arrow />
+                  </button>
                 </div>
-                <button className='  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white'>
-                  Request to book
-                  <Arrow />
-                </button>
-              </div>
+              ) : (
+                <div className='flex flex-col gap-3'>
+                  <h3 className='text-red-500 font-bold'>
+                    In order to book, you need to login/register
+                  </h3>
+                  <Link
+                    to='/auth/login'
+                    className='text-center bg-secondary text-white p-2 rounded-md font-silka hover:bg-transparent hover:border hover:border-secondary hover:text-black'
+                  >
+                    Login
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
