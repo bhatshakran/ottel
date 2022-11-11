@@ -100,8 +100,8 @@ export async function register({ name, password }: LoginForm) {
 }
 
 export async function login({ name, password }: LoginForm) {
-  const user = await db.user.findUnique({
-    where: { name },
+  const user = await db.user.findFirst({
+    where: { name: name },
   });
 
   if (!user) return null;

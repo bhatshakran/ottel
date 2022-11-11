@@ -1,9 +1,11 @@
-import React from 'react';
 import { json } from '@remix-run/node';
+import type { ActionFunction } from '@remix-run/node';
 import { useActionData, useSearchParams } from '@remix-run/react';
+import { createUserSession, login, register } from '~/utils/session.server';
+import { db } from '~/utils/db.server';
 
-function validateUsername(username: string) {
-  if (typeof username !== 'string' || username.length < 3) {
+function validateUsername(name: string) {
+  if (typeof name !== 'string' || name.length < 3) {
     return `Usernames must be atleast 3 characters long`;
   }
 }
@@ -23,6 +25,70 @@ function validateUrl(url: any) {
 }
 
 const badRequest = (data: any) => json(data, { status: 400 });
+
+export const action: ActionFunction = async ({ request }) => {
+  const form = await request.formData();
+  console.log(form);
+  const loginType = form.get('loginType');
+  const name = form.get('name');
+  const password = form.get('password');
+  const redirectTo = validateUrl(form.get('redirectTo') || '/');
+
+  if (
+    typeof loginType !== 'string' ||
+    typeof name !== 'string' ||
+    typeof password !== 'string' ||
+    typeof redirectTo !== 'string'
+  ) {
+    return badRequest({ formError: 'Form not submitted correctly' });
+  }
+
+  const fields = { loginType, name, password };
+  const fieldErrors = {
+    name: validateUsername(name),
+    password: validatePassword(password),
+  };
+
+  if (Object.values(fieldErrors).some(Boolean))
+    return badRequest({ fieldErrors, fields });
+
+  switch (loginType) {
+    case 'login': {
+      const user = await login({ name, password });
+      console.log({ user });
+      if (!user) {
+        return badRequest({
+          fields,
+          formError: `Username/Password combination is incorrect`,
+        });
+      }
+
+      return createUserSession(user.id, redirectTo);
+    }
+    case 'register': {
+      const userExists = await db.user.findFirst({ where: { name: name } });
+
+      if (userExists)
+        return badRequest({
+          fields,
+          formError: `User with name ${name} already exists`,
+        });
+      const user = await register({ name, password });
+
+      if (!user)
+        return badRequest({
+          fields,
+          formError: `Something went wrong while trying to create a new user`,
+        });
+
+      return createUserSession(user.id, redirectTo);
+    }
+
+    default: {
+      return badRequest({ fields, formError: `Login type invalid` });
+    }
+  }
+};
 
 const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg text-purple-900 outline-purple-300 `;
 const Login = () => {
@@ -67,17 +133,17 @@ const Login = () => {
             <input
               type='text'
               className={inputClassName}
-              name='username'
+              name='name'
               required
               minLength={3}
-              defaultValue={actionData?.fields?.username}
-              aria-invalid={Boolean(actionData?.fieldErrors?.username)}
+              defaultValue={actionData?.fields?.name}
+              aria-invalid={Boolean(actionData?.fieldErrors?.name)}
               aria-errormessage={
-                actionData?.fieldErrors?.username ? 'username-error' : undefined
+                actionData?.fieldErrors?.name ? 'name-error' : undefined
               }
             />
             {actionData?.fieldErrors?.username ? (
-              <p className='text-red-500' role='alert' id='username-error'>
+              <p className='text-red-500' role='alert' id='name-error'>
                 {actionData.fieldErrors.username}
               </p>
             ) : null}
