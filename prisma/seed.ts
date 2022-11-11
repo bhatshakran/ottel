@@ -1,4 +1,6 @@
-import { db } from '~/utils/db.server';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const hotelsData = [
   {
@@ -629,7 +631,7 @@ const usersData = [
 
 async function main() {
   hotelsData.forEach(async (hotel) => {
-    await db.hotel.create({
+    await prisma.hotel.create({
       data: {
         title: hotel.title,
         description: hotel.description,
@@ -647,7 +649,7 @@ async function main() {
   });
 
   usersData.forEach(async (user) => {
-    await db.user.create({
+    await prisma.user.create({
       data: {
         avatar: user.avatar,
         name: user.name,
@@ -662,10 +664,10 @@ async function main() {
 }
 main()
   .then(async () => {
-    await db.$disconnect();
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
     console.error(e);
-    await db.$disconnect();
+    await prisma.$disconnect();
     process.exit(1);
   });
