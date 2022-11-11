@@ -1,7 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-// import { hotelsData } from '~/data/hotels';
-
-const prisma = new PrismaClient();
+import { db } from '~/utils/db.server';
 
 const hotelsData = [
   {
@@ -577,9 +574,62 @@ const hotelsData = [
   },
 ];
 
+const usersData = [
+  {
+    passwordHash: 'token_************',
+    name: 'James J.',
+    avatar:
+      'https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560648533/mock/users/user-profile-1_mawp12.jpg',
+    contact: 'james@tinyhouse.com',
+    walletId: 'acct_************',
+    income: 723796,
+    bookings: [],
+  },
+  {
+    passwordHash: 'token_************',
+    name: 'Elizabeth A.',
+    avatar:
+      'https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560649052/mock/users/user-profile-2_arwtdy.jpg',
+    contact: 'elizabeth@tinyhouse.com',
+    walletId: 'acct_************',
+    income: 256144,
+    bookings: [],
+  },
+  {
+    passwordHash: 'token_************',
+    name: 'Andrew D.',
+    avatar:
+      'https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560649280/mock/users/user-profile-3_omxctk.jpg',
+    contact: 'andrew@tinyhouse.com',
+    walletId: 'acct_************',
+    income: 272359,
+    bookings: [],
+  },
+  {
+    passwordHash: 'token_************',
+    name: 'Danielle C.',
+    avatar:
+      'https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560650165/mock/users/user-profile-4_wxi6om.jpg',
+    contact: 'danielle@tinyhouse.com',
+    walletId: 'acct_************',
+    income: 465043,
+    bookings: [],
+  },
+  {
+    passwordHash: 'token_************',
+    name: 'Sarah K.',
+    avatar:
+      'https://res.cloudinary.com/tiny-house/image/upload/w_1000,ar_1:1,c_fill,g_auto/v1560650436/mock/users/user-profile-5_tm8hhl.jpg',
+    contact: 'sarah@tinyhouse.com',
+    walletId: 'acct_************',
+    income: 104347,
+    bookings: [],
+  },
+];
+
 async function main() {
   hotelsData.forEach(async (hotel) => {
-    const item = await prisma.hotel.create({
+    await db.hotel.create({
       data: {
         title: hotel.title,
         description: hotel.description,
@@ -594,16 +644,28 @@ async function main() {
         numOfGuest: hotel.numOfGuest,
       },
     });
+  });
 
-    console.log(item);
+  usersData.forEach(async (user) => {
+    await db.user.create({
+      data: {
+        avatar: user.avatar,
+        name: user.name,
+        contact: user.contact,
+        income: user.income,
+        walletId: user.walletId,
+        bookings: {},
+        passwordHash: 'token_************',
+      },
+    });
   });
 }
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await db.$disconnect();
   })
   .catch(async (e) => {
     console.error(e);
-    await prisma.$disconnect();
+    await db.$disconnect();
     process.exit(1);
   });

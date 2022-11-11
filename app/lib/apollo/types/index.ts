@@ -1,3 +1,1 @@
-export interface LogInArgs {
-  input: { code: string };
-}
+export * from './logintypes';

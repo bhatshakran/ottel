@@ -22,14 +22,13 @@ export const typeDefs = gql`
 
   type User {
     id: Int
-    token: String
+    passwordHash: String
     name: String
     avatar: String
     contact: String
     walletId: String
     income: Int
     bookings: [Booking]
-    hotels: [Hotel]
   }
 
   type Query {
