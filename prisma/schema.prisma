@@ -30,7 +30,7 @@ model Hotel {
 model User {
     id Int @unique @default(autoincrement())
     passwordHash String
-    name String
+    name String @unique
     avatar String
     contact String
     walletId String

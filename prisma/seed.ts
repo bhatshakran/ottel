@@ -630,6 +630,8 @@ const usersData = [
 ];
 
 async function main() {
+  // clear the database
+  console.log('Data cleared from the database ');
   hotelsData.forEach(async (hotel) => {
     await prisma.hotel.create({
       data: {
@@ -649,8 +651,10 @@ async function main() {
   });
 
   usersData.forEach(async (user) => {
-    await prisma.user.create({
-      data: {
+    await prisma.user.upsert({
+      where: { name: user.name },
+      update: {},
+      create: {
         avatar: user.avatar,
         name: user.name,
         contact: user.contact,
