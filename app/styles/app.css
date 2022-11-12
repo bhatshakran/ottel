@@ -628,6 +628,10 @@ video {
   margin-left: 1.5rem;
 }
 
+.mt-4 {
+  margin-top: 1rem;
+}
+
 .ml-auto {
   margin-left: auto;
 }
@@ -1190,6 +1194,10 @@ video {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.outline {
+  outline-style: solid;
 }
 
 .transition-transform {

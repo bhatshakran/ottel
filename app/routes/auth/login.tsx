@@ -6,6 +6,7 @@ import Container from '~/components/Container';
 import React from 'react';
 import { graphQLClient } from '~/lib/apollo';
 import { gql } from '@apollo/client';
+import GoogleIcon from '@mui/icons-material/Google';
 
 function validateUsername(name: string) {
   if (typeof name !== 'string' || name.length < 3) {
@@ -125,6 +126,21 @@ export const action: ActionFunction = async ({ request }) => {
 
 const inputClassName = `w-full  border-b border-lightorange px-2 py-1  text-secondary outline-none focus:border-secondary font-light`;
 const buttonClassName = `py-2 px-7   hover:bg-secondary w-auto  hover:text-white bg-white text-black border-secondary border hover:border-none font-silka`;
+const CONTAINER_STYLES = {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'start',
+  alignItems: 'center',
+};
+
+const BUTTON_STYLES = {
+  padding: '10px 15px',
+  background: '#dd4b39',
+  border: '0',
+  outline: 'none',
+  cursor: 'pointer',
+  color: 'white',
+};
 
 const Login = () => {
   const actionData = useActionData();
@@ -135,7 +151,7 @@ const Login = () => {
     <div className='flex items-center justify-center h-screen bg-white'>
       <Container>
         <div className='flex justify-center items-center content-center text-black'>
-          <div className='w-96 bg-white   font-bold px-5 py-6 rounded-md'>
+          <div className='w-96 bg-white   font-bold px-5 py-6 rounded-md '>
             <form method='post' className='font-silka'>
               <h1 className='text-center text-4xl  font-regis  text-secondary'>
                 Ottelo.
@@ -208,6 +224,17 @@ const Login = () => {
                 {authType === 'login' ? 'Login' : 'Register'}
               </button>
             </form>
+            <div className='mt-4 '>
+              <form
+                action={`/auth/google`}
+                method='post'
+                style={CONTAINER_STYLES}
+              >
+                <button style={BUTTON_STYLES} className='font-silka'>
+                  Login with Google <GoogleIcon />
+                </button>
+              </form>
+            </div>
             <div className='flex flex-col gap-6 mt-12'>
               <h2 className='opacity-60 font-light font-silka'>
                 {authType === 'login'
