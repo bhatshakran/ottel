@@ -24,6 +24,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-auth-google": "^1.1.0",
+    "remix-auth-socials": "^1.0.2",
     "stripe": "^10.17.0"
   },
   "devDependencies": {
