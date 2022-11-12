@@ -3,7 +3,6 @@ import { storage } from '../session.server';
 import { GoogleStrategy, SocialsProvider } from 'remix-auth-socials';
 import { gql } from '@apollo/client';
 import { graphQLClient } from '~/lib/apollo';
-import { db } from '../db.server';
 
 const sessionStorage = storage;
 
