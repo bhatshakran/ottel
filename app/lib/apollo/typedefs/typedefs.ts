@@ -58,6 +58,5 @@ export const typeDefs = gql`
     signup(input: LoginInput!): User
     login(input: LoginInput!): User
     loginWithGoogle(input: LoginWithGoogleInput!): User
-    someMutat: String
   }
 `;

@@ -125,8 +125,5 @@ export const resolvers = {
         }
       } else return dbUser;
     },
-    someMutat: async () => {
-      return 'Hello the mutate here';
-    },
   },
 };
