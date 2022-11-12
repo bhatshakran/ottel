@@ -64,7 +64,7 @@ const query = gql`
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data } = await graphQLClient.query({ query });
-  console.log(data);
+  console.log(data.hotels, 'hey there');
   return json({ hotels: data.hotels });
 };
 

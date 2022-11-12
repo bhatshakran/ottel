@@ -42,7 +42,13 @@ export const typeDefs = gql`
     code: String
   }
 
+  input LoginInput {
+    name: String
+    password: String
+  }
+
   type Mutation {
     signup(input: SignupInput): User
+    login(input: LoginInput!): User
   }
 `;

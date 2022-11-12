@@ -6,7 +6,6 @@ interface CardProps {
 }
 
 const RoomCard: React.FC<CardProps> = ({ data }: CardProps) => {
-  console.log(data);
   return (
     <div className='flex flex-col'>
       <div className='w-80 h-72 pl-4 border border-black pt-4'>

@@ -1,10 +1,12 @@
 import { json } from '@remix-run/node';
 import type { ActionFunction } from '@remix-run/node';
 import { useActionData, useSearchParams } from '@remix-run/react';
-import { createUserSession, login, register } from '~/utils/session.server';
+import { createUserSession, register } from '~/utils/session.server';
 import { db } from '~/utils/db.server';
 import Container from '~/components/Container';
 import React from 'react';
+import { graphQLClient } from '~/lib/apollo';
+import { gql } from '@apollo/client';
 
 function validateUsername(name: string) {
   if (typeof name !== 'string' || name.length < 3) {
@@ -31,7 +33,6 @@ const badRequest = (data: any) => json(data, { status: 400 });
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const loginType = form.get('buttonVal');
-  console.log(loginType);
   const name = form.get('name');
   const password = form.get('password');
   const redirectTo = validateUrl(form.get('redirectTo') || '/');
@@ -56,16 +57,35 @@ export const action: ActionFunction = async ({ request }) => {
 
   switch (loginType) {
     case 'login': {
-      const user = await login({ name, password });
-      console.log({ user });
-      if (!user) {
+      const mutation = gql`
+        mutation loginUser($input: LoginInput) {
+          login(input: $input) {
+            id
+            name
+            avatar
+            income
+          }
+        }
+      `;
+
+      const variables = {
+        input: {
+          name,
+          password,
+        },
+      };
+
+      const { data } = await graphQLClient.mutate({ mutation, variables });
+      const user = JSON.parse(JSON.stringify({ user: data.login }));
+      if (user.user === null) {
+        console.log('yeah');
         return badRequest({
           fields,
           formError: `Username/Password combination is incorrect`,
         });
+      } else if (user.user) {
+        return createUserSession(user.user.id, redirectTo);
       }
-
-      return createUserSession(user.id, redirectTo);
     }
     case 'register': {
       const userExists = await db.user.findFirst({ where: { name: name } });
@@ -93,7 +113,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 const inputClassName = `w-full  border-b border-lightorange px-2 py-1  text-secondary outline-none focus:border-secondary font-light`;
-const buttonClassName = `py-2 px-7   hover:bg-secondary w-full hover:text-white bg-white text-black border-secondary border hover:border-none font-silka`;
+const buttonClassName = `py-2 px-7   hover:bg-secondary w-auto  hover:text-white bg-white text-black border-secondary border hover:border-none font-silka`;
 
 const Login = () => {
   const actionData = useActionData();
@@ -114,7 +134,7 @@ const Login = () => {
                 name='redirectTo'
                 value={searchParams.get('redirectTo') ?? undefined}
               />
-              <h3 className='w-full text-center mt-6 opacity-60'>
+              <h3 className='w-full text-left mt-6 opacity-60'>
                 {authType === 'login' ? 'Sign in' : 'Sign up'}
               </h3>
 

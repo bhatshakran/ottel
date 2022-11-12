@@ -1,5 +1,6 @@
 import { db } from '~/utils/db.server';
 import type { LogInArgs } from '../types';
+import bcrypt from 'bcryptjs';
 
 export const resolvers = {
   Query: {
@@ -54,6 +55,23 @@ export const resolvers = {
         console.log('trying');
       } catch (error) {
         throw new Error(`Failed to log in: ${error}`);
+      }
+    },
+    login: async (_root: any, { input }: LogInArgs) => {
+      const { name, password } = input;
+      const dbUser = await db.user.findFirst({
+        where: { name: name },
+      });
+
+      if (!dbUser) return null;
+      else {
+        const isCorrectPassword = await bcrypt.compare(
+          password,
+          dbUser.passwordHash
+        );
+
+        if (!isCorrectPassword) return null;
+        return dbUser;
       }
     },
   },

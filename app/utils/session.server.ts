@@ -99,18 +99,6 @@ export async function register({ name, password }: LoginForm) {
   };
 }
 
-export async function login({ name, password }: LoginForm) {
-  const user = await db.user.findFirst({
-    where: { name: name },
-  });
-
-  if (!user) return null;
-  const isCorrectPassword = await bcrypt.compare(password, user.passwordHash);
-
-  if (!isCorrectPassword) return null;
-  return { id: user.id, name };
-}
-
 export async function logout(request: Request) {
   const session = await getUserSession(request);
   return redirect('/login', {

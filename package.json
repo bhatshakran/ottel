@@ -23,7 +23,8 @@
     "isbot": "^3.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "remix-auth-google": "^1.1.0"
+    "remix-auth-google": "^1.1.0",
+    "stripe": "^10.17.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.4",
