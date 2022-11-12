@@ -1,5 +1,5 @@
 import { db } from '~/utils/db.server';
-import type { LogInArgs } from '../types';
+import type { LogInArgs, LogInWithGoogleArgs } from '../types';
 import bcrypt from 'bcryptjs';
 
 export const resolvers = {
@@ -97,6 +97,36 @@ export const resolvers = {
         if (!isCorrectPassword) return null;
         return dbUser;
       }
+    },
+    loginWithGoogle: async (_root: any, { input }: LogInWithGoogleArgs) => {
+      const { name, avatar, contact } = input;
+      console.log(input);
+      const dbUser = await db.user.findFirst({
+        where: { name: name },
+      });
+      console.log(dbUser, 'dbuser');
+
+      if (dbUser === null) {
+        console.log('its null');
+        try {
+          const user = await db.user.create({
+            data: {
+              name,
+              passwordHash: '',
+              avatar,
+              walletId: '',
+              contact,
+              income: 0,
+            },
+          });
+          return user;
+        } catch (error) {
+          console.log('couldnt create user', error);
+        }
+      } else return dbUser;
+    },
+    someMutat: async () => {
+      return 'Hello the mutate here';
     },
   },
 };

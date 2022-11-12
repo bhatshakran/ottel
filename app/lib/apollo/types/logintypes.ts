@@ -5,6 +5,14 @@ export interface LogInArgs {
   };
 }
 
+export interface LogInWithGoogleArgs {
+  input: {
+    name: string;
+    contact: string;
+    avatar: string;
+  };
+}
+
 export interface User {
   id: number;
   name: string;

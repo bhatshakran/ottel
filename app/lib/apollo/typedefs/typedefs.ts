@@ -47,8 +47,17 @@ export const typeDefs = gql`
     password: String
   }
 
+  input LoginWithGoogleInput {
+    name: String
+    avatar: String
+    contact: String
+    id: Int
+  }
+
   type Mutation {
     signup(input: LoginInput!): User
     login(input: LoginInput!): User
+    loginWithGoogle(input: LoginWithGoogleInput!): User
+    someMutat: String
   }
 `;
