@@ -52,9 +52,33 @@ export const resolvers = {
   Mutation: {
     signup: async (_root: undefined, { input }: LogInArgs) => {
       try {
-        console.log('trying');
+        const { name, password } = input;
+        const userExists = await db.user.findFirst({ where: { name: name } });
+        if (userExists) throw new Error('User already exists');
+
+        const passwordHash = await bcrypt.hash(password, 10);
+        const user = await db.user.create({
+          data: {
+            name,
+            passwordHash,
+            avatar:
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+            walletId: '',
+            contact: '',
+            income: 0,
+          },
+        });
+
+        return {
+          id: user.id,
+          name,
+          avatar: user.avatar,
+          walletId: user.walletId,
+          income: user.income,
+          contact: user.contact,
+        };
       } catch (error) {
-        throw new Error(`Failed to log in: ${error}`);
+        return null;
       }
     },
     login: async (_root: any, { input }: LogInArgs) => {

@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import { createCookieSessionStorage, redirect } from '@remix-run/node';
 import { db } from './db.server';
 
@@ -68,35 +67,6 @@ export async function requireUserId(
   }
 
   return userId;
-}
-
-type LoginForm = {
-  name: string;
-  password: string;
-};
-
-export async function register({ name, password }: LoginForm) {
-  const passwordHash = await bcrypt.hash(password, 10);
-  const user = await db.user.create({
-    data: {
-      name,
-      passwordHash,
-      avatar:
-        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-      walletId: '',
-      contact: '',
-      income: 0,
-    },
-  });
-
-  return {
-    id: user.id,
-    name,
-    avatar: user.avatar,
-    walletId: user.walletId,
-    income: user.income,
-    contact: user.contact,
-  };
 }
 
 export async function logout(request: Request) {

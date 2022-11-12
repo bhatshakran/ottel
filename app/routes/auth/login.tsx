@@ -1,8 +1,7 @@
 import { json } from '@remix-run/node';
 import type { ActionFunction } from '@remix-run/node';
 import { useActionData, useSearchParams } from '@remix-run/react';
-import { createUserSession, register } from '~/utils/session.server';
-import { db } from '~/utils/db.server';
+import { createUserSession } from '~/utils/session.server';
 import Container from '~/components/Container';
 import React from 'react';
 import { graphQLClient } from '~/lib/apollo';
@@ -88,22 +87,34 @@ export const action: ActionFunction = async ({ request }) => {
       }
     }
     case 'register': {
-      const userExists = await db.user.findFirst({ where: { name: name } });
+      const mutation = gql`
+        mutation registerUser($input: LoginInput) {
+          signup(input: $input) {
+            id
+            name
+            avatar
+            income
+          }
+        }
+      `;
 
-      if (userExists)
+      const variables = {
+        input: {
+          name,
+          password,
+        },
+      };
+      const { data } = await graphQLClient.mutate({ mutation, variables });
+      const user = JSON.parse(JSON.stringify({ user: data.signup }));
+      console.log(user);
+
+      if (!user.user)
         return badRequest({
           fields,
-          formError: `User with name ${name} already exists`,
-        });
-      const user = await register({ name, password });
-
-      if (!user)
-        return badRequest({
-          fields,
-          formError: `Something went wrong while trying to create a new user`,
+          formError: `Something went wrong while trying to create a new user - User already exists`,
         });
 
-      return createUserSession(user.id, redirectTo);
+      return createUserSession(user.user.id, redirectTo);
     }
 
     default: {
