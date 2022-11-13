@@ -1,13 +1,15 @@
 import { gql } from '@apollo/client';
 import { graphQLClient } from '~/lib/apollo';
-import { json } from '@remix-run/node';
+import type { ActionFunction } from '@remix-run/node';
 import type { LoaderFunction } from '@remix-run/node';
-import { Link, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import { Link, useActionData, useLoaderData } from '@remix-run/react';
 import Arrow from '~/components/Arrow';
 import Container from '~/components/Container';
 import PlaceIcon from '@mui/icons-material/Place';
 import Header from '~/components/Header';
 import { getUser } from '~/utils/session.server';
+import { runValidation } from '~/utils/services/dateValidator';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
@@ -38,9 +40,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json({ hotel: data.getHotel, user });
 };
 
+export const action: ActionFunction = async ({ request }) => {
+  const body = await request.formData();
+  let checkInDate = body.get('checkinpicker');
+  const checkOutDate = body.get('checkoutpicker');
+  if (checkInDate && checkOutDate) {
+    const validated = runValidation(
+      checkInDate.toString(),
+      checkOutDate.toString()
+    );
+    if (validated) {
+      return json({ checkInDate, checkOutDate });
+    }
+    return 'Not validated';
+  }
+};
+
 const Hotel = () => {
   const { hotel, user } = useLoaderData();
-  console.log(user);
+  const actionData = useActionData();
+  console.log(actionData && actionData);
 
   return (
     <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center  px-8 md:py-0'>
@@ -74,14 +93,17 @@ const Hotel = () => {
                 </h3>
               </div>
               {user ? (
-                <div className='w-full  ml-auto  flex flex-col gap-8  overflow-hidden'>
+                <form
+                  method='post'
+                  className='w-full  ml-auto  flex flex-col gap-8  overflow-hidden'
+                >
                   <div className='font-silka flex flex-col gap-6 w-full'>
                     <div className='flex flex-col'>
                       <label htmlFor='checkin' className=' font-bold'>
                         Check in date:
                       </label>
                       <input
-                        type='datetime-local'
+                        type='date'
                         name='checkinpicker'
                         id='checkinpicker'
                         className='focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange'
@@ -92,18 +114,21 @@ const Hotel = () => {
                         Check out date:
                       </label>
                       <input
-                        type='datetime-local'
+                        type='date'
                         name='checkoutpicker'
                         id='checkoutpicker'
                         className='focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange'
                       />
                     </div>
                   </div>
-                  <button className='  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white'>
+                  <button
+                    className='  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white'
+                    type='submit'
+                  >
                     Request to book
                     <Arrow />
                   </button>
-                </div>
+                </form>
               ) : (
                 <div className='flex flex-col gap-3'>
                   <h3 className='text-red-500 font-bold'>
