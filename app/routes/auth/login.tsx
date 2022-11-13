@@ -57,6 +57,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   switch (loginType) {
     case 'login': {
+      console.log('running login');
       const mutation = gql`
         mutation loginUser($input: LoginInput) {
           login(input: $input) {

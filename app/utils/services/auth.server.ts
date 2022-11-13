@@ -1,10 +1,27 @@
 import { Authenticator } from 'remix-auth';
-import { storage } from '../session.server';
+import { createUserSession } from '../session.server';
 import { GoogleStrategy, SocialsProvider } from 'remix-auth-socials';
 import { gql } from '@apollo/client';
 import { graphQLClient } from '~/lib/apollo';
+import { createCookieSessionStorage } from '@remix-run/node';
 
-const sessionStorage = storage;
+const sessionSecret = process.env.SESSION_SECRET;
+
+if (!sessionSecret) {
+  throw new Error('SESSION_SECRET must be set');
+}
+
+const sessionStorage = createCookieSessionStorage({
+  cookie: {
+    name: 'Ottelo_session',
+    secure: process.env.NODE_ENV === 'production',
+    secrets: [sessionSecret],
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 30,
+    httpOnly: true,
+  },
+});
 
 export const authenticator = new Authenticator(sessionStorage);
 
@@ -31,8 +48,12 @@ async function handleSocialAuthCallback({ profile }: any) {
   };
 
   const { data } = await graphQLClient.mutate({ mutation, variables });
-  console.log(data);
-  return profile;
+  const user = JSON.parse(JSON.stringify({ user: data.loginWithGoogle }));
+  const redirectTo = '/';
+  console.log(user.user.id);
+  createUserSession(user.user.id, redirectTo);
+
+  // return profile;
 }
 
 authenticator.use(

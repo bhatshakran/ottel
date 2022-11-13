@@ -21,7 +21,13 @@ export const storage = createCookieSessionStorage({
 
 export async function createUserSession(userId: Number, redirectTo: string) {
   const session = await storage.getSession();
-  session.set('userId', userId);
+  try {
+    session.set('userId', userId);
+    console.log(session.get('userId'));
+  } catch (error) {
+    console.log(error);
+    return new Error(`'Could not set session', ${error}`);
+  }
   return redirect(redirectTo, {
     headers: {
       'Set-Cookie': await storage.commitSession(session),
@@ -41,9 +47,13 @@ export async function getUserId(request: Request) {
 }
 
 export async function getUser(request: Request) {
+  console.log(
+    await (
+      await storage.getSession(request.headers.get('Cookie'))
+    ).get('userId')
+  );
   const userId = await getUserId(request);
   if (typeof userId !== 'number') return null;
-
   try {
     const user = await db.user.findUnique({
       where: { id: userId },
