@@ -174,7 +174,7 @@ export const resolvers = {
 
           console.log(booking);
           return booking;
-        } else return null;
+        }
       }
     },
   },

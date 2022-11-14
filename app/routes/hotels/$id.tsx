@@ -10,6 +10,9 @@ import PlaceIcon from '@mui/icons-material/Place';
 import Header from '~/components/Header';
 import { getUser } from '~/utils/session.server';
 import { runValidation } from '~/utils/services/dateValidator';
+import React from 'react';
+import ErrorIcon from '@mui/icons-material/Error';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
@@ -110,9 +113,15 @@ export const action: ActionFunction = async ({ request }) => {
         },
       };
 
-      const { data } = await graphQLClient.mutate({ mutation, variables });
-
-      return json({ booking: data.createBooking });
+      const { data } = await graphQLClient.mutate({
+        mutation,
+        variables,
+      });
+      if (data.createBooking === null) {
+        return 'Booking already exists';
+      } else {
+        return json({ booking: data.createBooking });
+      }
     }
     return 'Not validated';
   }
@@ -121,12 +130,33 @@ export const action: ActionFunction = async ({ request }) => {
 const Hotel = () => {
   const { hotel, user } = useLoaderData();
   const actionData = useActionData();
+  const [bookingError, setBookingError] = React.useState('');
   console.log(actionData && actionData);
+
+  React.useEffect(() => {
+    if (typeof actionData === 'string') {
+      setBookingError(actionData);
+    }
+  }, [actionData]);
 
   return (
     <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center  px-8 md:py-0'>
       <Container>
         <Header />
+        {bookingError && (
+          <div className='border border-red-500 rounded-md w-full text-red-500 font-silka text-lg mt-8 py-4 px-2 flex justify-between'>
+            <div>
+              {bookingError}
+              <ErrorIcon fontSize='large' />
+            </div>
+            <button
+              className='cursor-pointer'
+              onClick={() => setBookingError('')}
+            >
+              <HighlightOffIcon fontSize='large' />
+            </button>
+          </div>
+        )}
         <div className='flex flex-col justify-start items-center h-full my-24 '>
           <div className=' flex flex-wrap justify-between  items-start w-full h-1/2 gap-10'>
             <div className='w-full md:w-1/2  '>
