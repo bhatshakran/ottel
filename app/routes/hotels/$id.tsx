@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { graphQLClient } from '~/lib/apollo';
-import type { ActionFunction } from '@remix-run/node';
-import type { LoaderFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
+import type { LoaderFunction, ActionFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { Link, useActionData, useLoaderData } from '@remix-run/react';
 import Arrow from '~/components/Arrow';
@@ -59,6 +59,7 @@ export const action: ActionFunction = async ({ request }) => {
   const body = await request.formData();
   let checkInDate = body.get('checkinpicker');
   const checkOutDate = body.get('checkoutpicker');
+  const price = body.get('price');
   const userId = body.get('userid');
   if (checkInDate && checkOutDate) {
     const validated = runValidation(
@@ -66,41 +67,10 @@ export const action: ActionFunction = async ({ request }) => {
       checkOutDate.toString()
     );
     if (validated) {
-      // create a booking for the user
-
-      const mutation = gql`
-        mutation createBooking($input: BookingInput) {
-          createBooking(input: $input) {
-            bookingId
-            bookerId
-            user {
-              name
-              id
-              avatar
-              income
-              walletId
-              bookings {
-                bookingId
-                userId
-                hotelId
-              }
-            }
-            hotel {
-              id
-              title
-              description
-              address
-              country
-              admin
-              city
-              bookings {
-                bookingId
-                userId
-                hotelId
-              }
-            }
-            hotelId
-          }
+      // check if the booking exists
+      const query = gql`
+        query doesBookingExists($input: BookingInput) {
+          bookingExists(input: $input)
         }
       `;
       const url = new URL(request.url);
@@ -113,18 +83,15 @@ export const action: ActionFunction = async ({ request }) => {
         },
       };
 
-      const { data } = await graphQLClient.mutate({
-        mutation,
-        variables,
-      });
-      if (data.createBooking === null) {
+      const { data } = await graphQLClient.query({ query, variables });
+      if (data.bookingExists) {
         return 'Booking already exists';
       } else {
-        return json({ booking: data.createBooking });
+        return redirect(`/checkout?price=${price}`);
       }
     }
-    return 'Not validated';
-  }
+    return 'Not validated, Check your booking details';
+  } else return null;
 };
 
 const Hotel = () => {
@@ -214,6 +181,7 @@ const Hotel = () => {
                       />
                     </div>
                   </div>
+                  <input type='hidden' name='price' value={hotel.price} />
                   <button
                     className='  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white'
                     type='submit'
@@ -244,3 +212,51 @@ const Hotel = () => {
 };
 
 export default Hotel;
+// create a booking for the user
+// return redirect('/checkout');
+/*  const mutation = gql`
+        mutation createBooking($input: BookingInput) {
+          createBooking(input: $input) {
+            bookingId
+            bookerId
+            user {
+              name
+              id
+              avatar
+              income
+              walletId
+              bookings {
+                bookingId
+                userId
+                hotelId
+              }
+            }
+            hotel {
+              id
+              title
+              description
+              address
+              country
+              admin
+              city
+              bookings {
+                bookingId
+                userId
+                hotelId
+              }
+            }
+            hotelId
+          }
+        }
+      `;
+      
+      
+
+      const { data } = await graphQLClient.mutate({
+        mutation,
+        variables,
+      });
+      if (data.createBooking === null) {
+      } else {
+        return json({ booking: data.createBooking });
+      } */

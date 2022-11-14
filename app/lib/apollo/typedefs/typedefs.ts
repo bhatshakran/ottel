@@ -34,13 +34,6 @@ export const typeDefs = gql`
     bookings: [Booking]
   }
 
-  type Query {
-    hotels(limit: Int): [Hotel]
-    users: [User]
-    searchHotels(city: String): [Hotel]
-    getHotel(id: Int): Hotel
-  }
-
   input SignupInput {
     code: String
   }
@@ -67,5 +60,12 @@ export const typeDefs = gql`
     login(input: LoginInput!): User
     loginWithGoogle(input: LoginWithGoogleInput!): User
     createBooking(input: BookingInput!): Booking
+  }
+  type Query {
+    hotels(limit: Int): [Hotel]
+    users: [User]
+    searchHotels(city: String): [Hotel]
+    getHotel(id: Int): Hotel
+    bookingExists(input: BookingInput!): Boolean
   }
 `;
