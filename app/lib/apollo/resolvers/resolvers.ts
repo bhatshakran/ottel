@@ -1,5 +1,5 @@
 import { db } from '~/utils/db.server';
-import type { LogInArgs, LogInWithGoogleArgs } from '../types';
+import type { BookingArgs, LogInArgs, LogInWithGoogleArgs } from '../types';
 import bcrypt from 'bcryptjs';
 
 export const resolvers = {
@@ -121,6 +121,61 @@ export const resolvers = {
           console.log('couldnt create user', error);
         }
       } else return dbUser;
+    },
+    createBooking: async (_root: any, { input }: BookingArgs) => {
+      const { userId, hotelId } = input;
+      const bookingExists = await db.booking.findFirst({
+        where: {
+          AND: [
+            {
+              userId: {
+                equals: userId,
+              },
+            },
+            {
+              hotelId: {
+                equals: hotelId,
+              },
+            },
+          ],
+        },
+      });
+      if (bookingExists) return null;
+      else {
+        // search for hotel
+        const hotel = await db.hotel.findUnique({
+          where: { id: hotelId },
+        });
+        // search for user
+        const user = await db.user.findUnique({
+          where: { id: userId },
+        });
+        // if both are found create booking
+        if (hotel && user) {
+          let bookingData = {
+            hotel: {
+              connect: {
+                id: hotelId,
+              },
+            },
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+          };
+          const booking = await db.booking.create({
+            data: bookingData,
+            include: {
+              hotel: true,
+              user: true,
+            },
+          });
+
+          console.log(booking);
+          return booking;
+        } else return null;
+      }
     },
   },
 };

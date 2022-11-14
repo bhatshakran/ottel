@@ -10,39 +10,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Hotel {
-    id  Int @unique @default(autoincrement())
-    title String
-    description String
-    image String
-    host String
-    address String
-    country String
-    admin String
-    city String
-    bookings Booking[] 
-    price Int
-    numOfGuest Int
+  id          Int       @unique @default(autoincrement())
+  title       String
+  description String
+  image       String
+  host        String
+  address     String
+  country     String
+  admin       String
+  city        String
+  bookings    Booking[]
+  price       Int
+  numOfGuest  Int
 }
 
 model User {
-    id Int @unique @default(autoincrement())
-    passwordHash String
-    name String @unique
-    avatar String
-    contact String
-    walletId String
-    income Int
-    bookings Booking[]
+  id           Int       @unique @default(autoincrement())
+  passwordHash String
+  name         String    @unique
+  avatar       String
+  contact      String
+  walletId     String
+  income       Int
+  bookings     Booking[]
 }
 
 model Booking {
-  bookingId Int @unique @default(autoincrement())
-  user User @relation(fields: [bookerId], references:[id])
-  bookerId Int
-  hotel Hotel @relation(fields: [bookingId], references: [id])
-  
+  bookingId Int   @unique @default(autoincrement())
+  user      User  @relation(fields: [userId], references: [id])
+  hotel     Hotel @relation(fields: [hotelId], references: [id])
+  hotelId   Int
+  userId    Int
 }
-

@@ -29,6 +29,18 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         bookings
         price
         numOfGuest
+        bookings {
+          bookingId
+          bookerId
+          hotel {
+            id
+            title
+          }
+          user {
+            id
+            name
+          }
+        }
       }
     }
   `;
@@ -44,13 +56,63 @@ export const action: ActionFunction = async ({ request }) => {
   const body = await request.formData();
   let checkInDate = body.get('checkinpicker');
   const checkOutDate = body.get('checkoutpicker');
+  const userId = body.get('userid');
   if (checkInDate && checkOutDate) {
     const validated = runValidation(
       checkInDate.toString(),
       checkOutDate.toString()
     );
     if (validated) {
-      return json({ checkInDate, checkOutDate });
+      // create a booking for the user
+
+      const mutation = gql`
+        mutation createBooking($input: BookingInput) {
+          createBooking(input: $input) {
+            bookingId
+            bookerId
+            user {
+              name
+              id
+              avatar
+              income
+              walletId
+              bookings {
+                bookingId
+                userId
+                hotelId
+              }
+            }
+            hotel {
+              id
+              title
+              description
+              address
+              country
+              admin
+              city
+              bookings {
+                bookingId
+                userId
+                hotelId
+              }
+            }
+            hotelId
+          }
+        }
+      `;
+      const url = new URL(request.url);
+      const splittedUrl = url.pathname.split('/');
+      const hotelId = Number(splittedUrl[splittedUrl.length - 1]);
+      const variables = {
+        input: {
+          hotelId: Number(hotelId),
+          userId: Number(userId),
+        },
+      };
+
+      const { data } = await graphQLClient.mutate({ mutation, variables });
+
+      return json({ booking: data.createBooking });
     }
     return 'Not validated';
   }
@@ -99,6 +161,7 @@ const Hotel = () => {
                 >
                   <div className='font-silka flex flex-col gap-6 w-full'>
                     <div className='flex flex-col'>
+                      <input type='hidden' name='userid' value={user.id} />
                       <label htmlFor='checkin' className=' font-bold'>
                         Check in date:
                       </label>

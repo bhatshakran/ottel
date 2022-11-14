@@ -3,7 +3,10 @@ import { gql } from '@apollo/client';
 export const typeDefs = gql`
   type Booking {
     bookingId: Int
-    bookerId: Int
+    userId: Int
+    hotel: Hotel
+    user: User
+    hotelId: Int
   }
 
   type Hotel {
@@ -47,6 +50,11 @@ export const typeDefs = gql`
     password: String
   }
 
+  input BookingInput {
+    userId: Int
+    hotelId: Int
+  }
+
   input LoginWithGoogleInput {
     name: String
     avatar: String
@@ -58,5 +66,6 @@ export const typeDefs = gql`
     signup(input: LoginInput!): User
     login(input: LoginInput!): User
     loginWithGoogle(input: LoginWithGoogleInput!): User
+    createBooking(input: BookingInput!): Booking
   }
 `;
