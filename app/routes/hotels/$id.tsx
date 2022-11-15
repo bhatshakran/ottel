@@ -111,7 +111,7 @@ const Hotel = () => {
   return (
     <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center  px-8 md:py-0'>
       <Container>
-        <Header />
+        <Header id={user.id && user.id} />
 
         {bookingError && (
           <div className='border border-red-500 rounded-md w-full text-red-500 font-silka text-lg mt-8 py-4 px-2 flex justify-between'>

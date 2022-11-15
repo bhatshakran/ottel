@@ -2,39 +2,26 @@ import React from 'react';
 import Container from './Container';
 import RoomCard from './RoomCard';
 
-const cardsData = [
-  {
-    id: 0,
-    img: 'https://res.cloudinary.com/tiny-house/image/upload/v1560641331/mock/Dubai/dubai-listing-8_fg5dtb.jpg',
-    name: 'King Suite',
-    cost: 220,
-    rooms: '4 bedrooms',
-  },
-  {
-    id: 1,
-    img: 'https://res.cloudinary.com/tiny-house/image/upload/v1560646289/mock/Cancun/cancun-listing-2_bsocu5.jpg',
-    name: 'Premium Suite',
-    cost: 320,
-    rooms: '2 bedrooms',
-  },
-  {
-    id: 2,
-    img: 'https://res.cloudinary.com/tiny-house/image/upload/v1560645375/mock/Los%20Angeles/los-angeles-listing-2_ygm2ai.jpg',
-    name: 'Master Suite',
-    cost: 520,
-    rooms: '3 bedrooms',
-  },
-];
-
 export interface CardData {
   id: number;
-  img: string;
+  image: string;
   name: string;
-  cost: number;
-  rooms: string;
+  price: number;
+  numOfGuest: string;
+  city: string;
+  host: string;
+  country: string;
+  admin: string;
+  title: string;
+  bookings: any[] | null;
 }
 
-const Showcase: React.FC = () => {
+interface ShowcaseProps {
+  data: CardData[];
+}
+
+const Showcase: React.FC<ShowcaseProps> = ({ data }: ShowcaseProps) => {
+  console.log(data);
   return (
     <>
       <Container>
@@ -53,8 +40,8 @@ const Showcase: React.FC = () => {
             </p>
           </div>
           <div className='flex flex-wrap gap-6 w-full justify-center'>
-            {cardsData.map((item: CardData) => {
-              return <RoomCard data={item} key={item.id} />;
+            {data.map((item: CardData) => {
+              return <RoomCard hotel={item} key={item.id} />;
             })}
           </div>
         </div>
