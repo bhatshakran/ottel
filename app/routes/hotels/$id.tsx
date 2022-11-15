@@ -13,7 +13,6 @@ import { runValidation } from '~/utils/services/dateValidator';
 import React from 'react';
 import ErrorIcon from '@mui/icons-material/Error';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import Menu from '~/components/menu';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
@@ -109,25 +108,10 @@ const Hotel = () => {
     }
   }, [actionData]);
 
-  const [isMenuActive, setIsMenuActive] = React.useState(false);
-
-  const showMenu = () => {
-    setIsMenuActive(!isMenuActive);
-  };
-  React.useEffect(() => {
-    if (isMenuActive) {
-      if (window)
-        window.onscroll = function () {
-          window.scrollTo(0, 0);
-        };
-    }
-  }, [isMenuActive]);
-
   return (
     <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center  px-8 md:py-0'>
       <Container>
-        <Header showMenu={showMenu} />
-        {isMenuActive && <Menu showMenu={showMenu} />}
+        <Header />
 
         {bookingError && (
           <div className='border border-red-500 rounded-md w-full text-red-500 font-silka text-lg mt-8 py-4 px-2 flex justify-between'>
