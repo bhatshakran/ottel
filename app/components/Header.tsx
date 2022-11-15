@@ -1,8 +1,14 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Container from './Container';
 
-const Header: React.FC = () => {
+export interface Props {
+  showMenu: () => void;
+}
+
+const Header = ({ showMenu }: Props) => {
+  const displayMenu = () => {
+    showMenu();
+  };
   return (
     <>
       <Container>
@@ -10,7 +16,9 @@ const Header: React.FC = () => {
           <div className='text-lg'>
             <Link to='/'>Ottelo</Link>
           </div>
-          <div className='text-lg cursor-pointer'>menu</div>
+          <div className='text-lg cursor-pointer' onClick={displayMenu}>
+            menu
+          </div>
         </div>
       </Container>
     </>
