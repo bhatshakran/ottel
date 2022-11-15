@@ -23,7 +23,6 @@ export async function createUserSession(userId: Number, redirectTo: string) {
   const session = await storage.getSession();
   try {
     session.set('userId', userId);
-    console.log(session.get('userId'));
   } catch (error) {
     console.log(error);
     return new Error(`'Could not set session', ${error}`);

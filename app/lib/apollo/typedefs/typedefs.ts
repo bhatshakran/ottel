@@ -55,6 +55,10 @@ export const typeDefs = gql`
     id: Int
   }
 
+  input getUserInput {
+    id: Int
+  }
+
   type Mutation {
     signup(input: LoginInput!): User
     login(input: LoginInput!): User
@@ -67,5 +71,6 @@ export const typeDefs = gql`
     searchHotels(city: String): [Hotel]
     getHotel(id: Int): Hotel
     bookingExists(input: BookingInput!): Boolean
+    getUser(input: getUserInput!): User
   }
 `;

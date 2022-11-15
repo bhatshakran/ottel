@@ -20,12 +20,13 @@ export interface BookingArgs {
   };
 }
 
+export interface getUserArgs {
+  input: {
+    id: number;
+  };
+}
+
 export interface User {
   id: number;
   name: string;
-  /* passwordHash: string;
-  avatar: string;
-  income: number;
-  walletId: string;
-  bookings?: any[]; */
 }

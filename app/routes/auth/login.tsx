@@ -19,12 +19,11 @@ function validatePassword(password: string) {
   }
 }
 function validateUrl(url: any) {
-  console.log(url);
-  let urls = ['/'];
+  let urls = ['/account'];
   if (urls.includes(url)) {
     return url;
   }
-  return '/';
+  return '/account';
 }
 
 const badRequest = (data: any) => json(data, { status: 400 });

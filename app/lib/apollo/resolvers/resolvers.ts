@@ -1,5 +1,10 @@
 import { db } from '~/utils/db.server';
-import type { BookingArgs, LogInArgs, LogInWithGoogleArgs } from '../types';
+import type {
+  BookingArgs,
+  getUserArgs,
+  LogInArgs,
+  LogInWithGoogleArgs,
+} from '../types';
 import bcrypt from 'bcryptjs';
 
 export const resolvers = {
@@ -68,6 +73,18 @@ export const resolvers = {
       });
       if (bookingExists) return true;
       else return false;
+    },
+
+    getUser: async (_root: any, { input }: getUserArgs) => {
+      const { id } = input;
+      console.log(input);
+      const userExists = await db.user.findUnique({
+        where: { id },
+        include: { bookings: true },
+      });
+
+      if (userExists) return userExists;
+      else return null;
     },
   },
   Mutation: {

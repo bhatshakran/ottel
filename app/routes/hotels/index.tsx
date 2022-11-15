@@ -46,22 +46,6 @@ const query = gql`
   }
 `;
 
-// const query = gql`
-//   query getUser {
-//     users {
-//       id
-//       token
-//       name
-//       avatar
-//       contact
-//       walletId
-//       income
-//       bookings
-//       hotels
-//     }
-//   }
-// `;
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { data } = await graphQLClient.query({ query });
   return json({ hotels: data.hotels });
