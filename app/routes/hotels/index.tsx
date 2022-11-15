@@ -113,16 +113,16 @@ export default function Hotels() {
     }
   }, [isMenuActive]);
   return (
-    <main className='bg-backgroundColor max-h-screen px-8 md:px-0 overflow-y-hidden'>
+    <main className='bg-backgroundColor md:max-h-screen px-8 md:px-0 md:overflow-y-hidden'>
       <Container>
         <Header showMenu={showMenu} />
         {isMenuActive && <Menu showMenu={showMenu} />}
         <div className='flex flex-wrap '>
-          <div className='leftpane w-full md:w-1/2  h-screen px-4 flex flex-wrap  justify-center'>
-            <div className='w-full h-1/3 flex justify-center'>
+          <div className='leftpane w-full h-auto md:w-1/2  md:h-screen px-4 flex flex-wrap  justify-center gap-y-3 md:gap-0'>
+            <div className='w-full h-20 md:h-1/3 flex justify-center'>
               <SearchSvg />
             </div>
-            <div className=' h-96 p-6 rounded-lg w-2/3 shadow-sm'>
+            <div className='h-auto md:h-96 p-6 rounded-lg w-full md:w-2/3 shadow-sm'>
               <Form method='post' className='flex gap-2'>
                 <input
                   type='text'
@@ -163,7 +163,7 @@ export default function Hotels() {
               </div>
             </div>
           </div>
-          <div className=' rightpane w-full md:w-1/2 pt-16 overflow-scroll pb-16'>
+          <div className=' rightpane w-full h-auto md:h-screen md:w-1/2 pt-16 md:overflow-scroll pb-16'>
             <div>
               <div className='font-regis text-5xl'>
                 {actionData ? (

@@ -6,8 +6,7 @@ const SearchSvg = () => {
       id='Layer_1'
       data-name='Layer 1'
       viewBox='0 0 400 300'
-      width='406'
-      height='306'
+      className='h-28 md:h-72'
     >
       <title>#18 search engine</title>
       <path
