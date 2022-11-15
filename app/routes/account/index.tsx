@@ -11,8 +11,6 @@ import child from '../../../public/imgs/svgs/child.svg';
 import brownkid from '../../../public/imgs/svgs/brownkid.svg';
 import Container from '~/components/Container';
 import Header from '~/components/Header';
-import Menu from '~/components/menu';
-import React from 'react';
 
 const imgsArr = [blackgirl, blackspecs, child, brownkid, spanishguy];
 
@@ -80,29 +78,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 const Account = () => {
-  const [isMenuActive, setIsMenuActive] = React.useState(false);
-
   const { user, allBookings } = useLoaderData();
   console.log(allBookings);
 
-  const showMenu = () => {
-    setIsMenuActive(!isMenuActive);
-  };
-  React.useEffect(() => {
-    if (isMenuActive) {
-      if (window)
-        window.onscroll = function () {
-          window.scrollTo(0, 0);
-        };
-    }
-    return () => setIsMenuActive(false);
-  }, [isMenuActive]);
   return (
     <main className='w-full bg-backgroundColor h-screen  '>
       <Container>
-        <Header showMenu={showMenu} />
-        {isMenuActive && <Menu showMenu={showMenu} />}
-        <div className=' flex justify-center min-h-screen items-center px-2 md:px-0'>
+        <Header id={user.id} />
+
+        <div className=' flex flex-col justify-center min-h-screen items-center px-2 md:px-0'>
+          <div className='mb-12 border p-2 rounded-md border-secondary'>
+            <Link to='/auth/logout'>Logout</Link>
+          </div>
           <div className='border flex flex-col items-start border-lightorange p-4 gap-3 rounded-md w-auto'>
             <div className='w-full flex items-center gap-8'>
               <div className='relative '>

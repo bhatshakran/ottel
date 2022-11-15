@@ -12,8 +12,8 @@ import HotelCard from '~/components/HotelCard';
 import React from 'react';
 import Container from '~/components/Container';
 import Header from '~/components/Header';
-import Menu from '~/components/menu';
 import SearchSvg from '~/components/searchsvg';
+import { getUser } from '~/utils/session.server';
 
 export interface Hotel {
   id: number;
@@ -50,8 +50,9 @@ const query = gql`
 `;
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const user = await getUser(request);
   const { data } = await graphQLClient.query({ query });
-  return json({ hotels: data.hotels });
+  return json({ hotels: data.hotels, id: user?.id });
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -82,7 +83,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Hotels() {
   const transition = useTransition();
-  const { hotels } = useLoaderData();
+  const { hotels, id } = useLoaderData();
   const actionData = useActionData();
   const [cityVal, setCityVal] = React.useState('');
 
@@ -99,24 +100,10 @@ export default function Hotels() {
     }
   };
 
-  const [isMenuActive, setIsMenuActive] = React.useState(false);
-
-  const showMenu = () => {
-    setIsMenuActive(!isMenuActive);
-  };
-  React.useEffect(() => {
-    if (isMenuActive) {
-      if (window)
-        window.onscroll = function () {
-          window.scrollTo(0, 0);
-        };
-    }
-  }, [isMenuActive]);
   return (
     <main className='bg-backgroundColor md:max-h-screen px-8 md:px-0 md:overflow-y-hidden'>
       <Container>
-        <Header showMenu={showMenu} />
-        {isMenuActive && <Menu showMenu={showMenu} />}
+        <Header id={id} />
         <div className='flex flex-wrap '>
           <div className='leftpane w-full h-auto md:w-1/2  md:h-screen px-4 flex flex-wrap  justify-center gap-y-3 md:gap-0'>
             <div className='w-full h-20 md:h-1/3 flex justify-center'>

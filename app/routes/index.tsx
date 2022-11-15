@@ -16,12 +16,16 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Index() {
-  const { id } = useLoaderData();
+  const data = useLoaderData();
+  let id;
+  if (data !== null) {
+    id = data.id;
+  }
   console.log(id);
   return (
     <main className='bg-backgroundColor relative'>
       {/* {isMenuActive && <Menu showMenu={showMenu} />} */}
-      <Header id={id} />
+      <Header id={id ? id : null} />
       <Banner />
       <Showcase />
       <Features />

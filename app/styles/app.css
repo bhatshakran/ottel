@@ -644,6 +644,10 @@ video {
   margin-left: auto;
 }
 
+.mb-12 {
+  margin-bottom: 3rem;
+}
+
 .flex {
   display: flex;
 }
@@ -684,6 +688,10 @@ video {
   height: 100vh;
 }
 
+.h-28 {
+  height: 7rem;
+}
+
 .h-16 {
   height: 4rem;
 }
@@ -692,20 +700,8 @@ video {
   height: 2.5rem;
 }
 
-.h-1\/3 {
-  height: 33.333333%;
-}
-
 .h-20 {
   height: 5rem;
-}
-
-.h-28 {
-  height: 7rem;
-}
-
-.max-h-screen {
-  max-height: 100vh;
 }
 
 .min-h-screen {
@@ -762,10 +758,6 @@ video {
 
 .w-10 {
   width: 2.5rem;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
 }
 
 .max-w-6xl {
@@ -870,6 +862,11 @@ video {
   row-gap: 1rem;
 }
 
+.gap-x-3 {
+  -moz-column-gap: 0.75rem;
+       column-gap: 0.75rem;
+}
+
 .gap-y-12 {
   row-gap: 3rem;
 }
@@ -882,21 +879,8 @@ video {
   row-gap: 0.75rem;
 }
 
-.gap-x-3 {
-  -moz-column-gap: 0.75rem;
-       column-gap: 0.75rem;
-}
-
 .overflow-hidden {
   overflow: hidden;
-}
-
-.overflow-scroll {
-  overflow: scroll;
-}
-
-.overflow-y-hidden {
-  overflow-y: hidden;
 }
 
 .rounded-lg {
@@ -1029,16 +1013,16 @@ video {
   padding: 1rem;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .p-2 {
   padding: 0.5rem;
 }
 
 .p-6 {
   padding: 1.5rem;
-}
-
-.p-3 {
-  padding: 0.75rem;
 }
 
 .px-8 {
@@ -1134,8 +1118,8 @@ video {
   padding-top: 4rem;
 }
 
-.pt-0 {
-  padding-top: 0px;
+.pt-12 {
+  padding-top: 3rem;
 }
 
 .text-left {
@@ -1243,11 +1227,6 @@ video {
   color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 
-.text-lightorange {
-  --tw-text-opacity: 1;
-  color: rgb(249 182 125 / var(--tw-text-opacity));
-}
-
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -1259,10 +1238,6 @@ video {
 
 .opacity-60 {
   opacity: 0.6;
-}
-
-.opacity-70 {
-  opacity: 0.7;
 }
 
 .shadow-sm {
@@ -1441,16 +1416,16 @@ video {
     height: auto;
   }
 
+  .md\:h-72 {
+    height: 18rem;
+  }
+
   .md\:h-screen {
     height: 100vh;
   }
 
   .md\:h-1\/3 {
     height: 33.333333%;
-  }
-
-  .md\:h-72 {
-    height: 18rem;
   }
 
   .md\:h-96 {
@@ -1538,10 +1513,6 @@ video {
   .md\:py-0 {
     padding-top: 0px;
     padding-bottom: 0px;
-  }
-
-  .md\:pt-16 {
-    padding-top: 4rem;
   }
 
   .md\:text-left {
