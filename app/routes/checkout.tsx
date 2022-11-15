@@ -20,12 +20,10 @@ const paypalScriptOptions: PayPalScriptOptions = {
 
 interface Props {
   price: number;
-  hotelId: number;
-  userId: number;
   setTransactionCompleted: any;
 }
 
-function Button({ price, hotelId, userId, setTransactionCompleted }: Props) {
+function Button({ price, setTransactionCompleted }: Props) {
   // const [tranState, setTranState] = React.useState(false)
 
   const tranComplete = () => {
@@ -157,8 +155,6 @@ export default function Checkout() {
         <Button
           setTransactionCompleted={setTransactionCompleted}
           price={Number(price)}
-          hotelId={Number(hotelId)}
-          userId={Number(userId)}
         />
         {transactionCompleted && 'completed transaction'}
       </PayPalScriptProvider>

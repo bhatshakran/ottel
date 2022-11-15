@@ -107,7 +107,6 @@ const Hotel = () => {
 
   const actionData = useActionData();
   const [bookingError, setBookingError] = React.useState('');
-  console.log(actionData && actionData);
 
   React.useEffect(() => {
     if (typeof actionData === 'string') {
