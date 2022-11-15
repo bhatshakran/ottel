@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className=' flex flex-wrap w-full'>
           <div className='w-full md:w-1/2 bg-lightorange p-8'>
             <h3 className='font-regis text-3xl'>Ottelo</h3>
-            <p className='font-silka w-96 mt-6'>
+            <p className='font-silka w-full md:w-96 mt-6'>
               Reconnect with yourself.Experience the romance of a holiday with
               the comfort of a home.
             </p>

@@ -86,8 +86,8 @@ const Account = () => {
       <Container>
         <Header id={user.id} />
 
-        <div className=' flex flex-col justify-center min-h-screen items-center px-2 md:px-0'>
-          <div className='mb-12 border p-2 rounded-md border-secondary'>
+        <div className=' flex flex-col justify-center min-h-screen items-center px-2 md:px-0 pb-8'>
+          <div className='mt-6 mb-12 border p-2 rounded-md border-secondary'>
             <Link to='/auth/logout'>Logout</Link>
           </div>
           <div className='border flex flex-col items-start border-lightorange p-4 gap-3 rounded-md w-auto'>

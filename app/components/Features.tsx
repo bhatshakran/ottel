@@ -80,11 +80,11 @@ const Features: React.FC = () => {
                 />
               </div>
             </div>
-            <div className='w-full md:w-1/2 text-white p-8'>
-              <h3 className='text-5xl font-regis'>
+            <div className='w-full md:w-1/2 text-white py-8 px-2 sm:p-8'>
+              <h3 className=' text-4xl md:text-5xl font-regis'>
                 You'll never want to leave
               </h3>
-              <p className='mt-16 font-silka text-lg'>
+              <p className=' mt-8 md:mt-16 font-silka text-lg'>
                 The freedom to do exactly what you want" whether it is dipping
                 into a tub of hot water with a book or exploring local culture.
                 The perfect place to open your heart and let it decide!

@@ -101,10 +101,10 @@ export default function Hotels() {
   };
 
   return (
-    <main className='bg-backgroundColor md:max-h-screen px-8 md:px-0 md:overflow-y-hidden'>
+    <main className='bg-backgroundColor w-full md:max-h-screen  md:overflow-y-hidden'>
+      <Header id={id} />
       <Container>
-        <Header id={id} />
-        <div className='flex flex-wrap '>
+        <div className='flex flex-wrap px-2 sm:px-8 md:px-0'>
           <div className='leftpane w-full h-auto md:w-1/2  md:h-screen px-4 flex flex-wrap  justify-center gap-y-3 md:gap-0'>
             <div className='w-full h-20 md:h-1/3 flex justify-center'>
               <SearchSvg />

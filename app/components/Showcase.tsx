@@ -39,7 +39,7 @@ const Showcase: React.FC<ShowcaseProps> = ({ data }: ShowcaseProps) => {
               view to wake up to.
             </p>
           </div>
-          <div className='flex flex-wrap gap-6 w-full justify-center'>
+          <div className='flex flex-wrap gap-6 w-full justify-center '>
             {data.map((item: CardData) => {
               return <RoomCard hotel={item} key={item.id} />;
             })}
