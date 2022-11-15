@@ -6,6 +6,7 @@ import {
 import type { PayPalScriptOptions } from '@paypal/paypal-js/types/script-options';
 import type { PayPalButtonsComponentOptions } from '@paypal/paypal-js/types/components/buttons';
 import type { ActionFunction, LoaderFunction } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { gql } from '@apollo/client';
 import { graphQLClient } from '~/lib/apollo';
@@ -131,7 +132,7 @@ export const action: ActionFunction = async ({ request }) => {
     variables,
   });
   console.log(data);
-  return null;
+  return redirect('/account');
 };
 
 export default function Checkout() {
@@ -169,31 +170,3 @@ export default function Checkout() {
     </div>
   );
 }
-
-/*  const { data } = await graphQLClient.query({ query });
-
-          console.log(data);
-          if (data.createBooking === null) {
-            console.log('transaction not possible');
-          } else {
-            console.log('booking created');
-            console.log(data.createBooking);
-          } */
-/*    const query = gql`
-          query getHotels {
-            hotels(limit: 10) {
-              id
-              title
-              image
-              host
-              address
-              country
-              admin
-              city
-              bookings
-              price
-              numOfGuest
-            }
-          }
-        `;
-        const { data } = await graphQLClient.query({ query }); */

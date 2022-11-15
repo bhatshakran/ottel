@@ -53,6 +53,14 @@ export const resolvers = {
 
       return hotel;
     },
+    getBookings: async (_: any, { id }: any) => {
+      const bookings = await db.booking.findMany({
+        where: { userId: id },
+        include: { hotel: true, user: true },
+      });
+      console.log(bookings, 'bookings from server');
+      return bookings;
+    },
     bookingExists: async (_root: any, { input }: BookingArgs) => {
       const { userId, hotelId } = input;
       const bookingExists = await db.booking.findFirst({
@@ -80,7 +88,6 @@ export const resolvers = {
       console.log(input);
       const userExists = await db.user.findUnique({
         where: { id },
-        include: { bookings: true },
       });
 
       if (userExists) return userExists;

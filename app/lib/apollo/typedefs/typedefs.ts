@@ -72,5 +72,6 @@ export const typeDefs = gql`
     getHotel(id: Int): Hotel
     bookingExists(input: BookingInput!): Boolean
     getUser(input: getUserInput!): User
+    getBookings(id: Int): [Booking]
   }
 `;
