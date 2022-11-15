@@ -88,7 +88,9 @@ export const action: ActionFunction = async ({ request }) => {
       if (data.bookingExists) {
         return 'Booking already exists';
       } else {
-        return redirect(`/checkout?price=${price}`);
+        return redirect(
+          `/checkout?price=${price}&userId=${userId}&hotelId=${hotelId}`
+        );
       }
     }
     return 'Not validated, Check your booking details';
@@ -229,53 +231,5 @@ const Hotel = () => {
 };
 
 export default Hotel;
-// create a booking for the user
-// return redirect('/checkout');
-/*  const mutation = gql`
-        mutation createBooking($input: BookingInput) {
-          createBooking(input: $input) {
-            bookingId
-            bookerId
-            user {
-              name
-              id
-              avatar
-              income
-              walletId
-              bookings {
-                bookingId
-                userId
-                hotelId
-              }
-            }
-            hotel {
-              id
-              title
-              description
-              address
-              country
-              admin
-              city
-              bookings {
-                bookingId
-                userId
-                hotelId
-              }
-            }
-            hotelId
-          }
-        }
-      `;
-      
-      
-
-      const { data } = await graphQLClient.mutate({
-        mutation,
-        variables,
-      });
-      if (data.createBooking === null) {
-      } else {
-        return json({ booking: data.createBooking });
-      } */
 
 /* # DATABASE_URL='postgres://wkukmgmafkbmkc:eebbcb43027d009d664629542c609c64ce16627cfaba291b1a06ea150a00ee88@ec2-18-215-41-121.compute-1.amazonaws.com:5432/ddstbtvtj2iedt' */

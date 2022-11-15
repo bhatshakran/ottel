@@ -162,15 +162,17 @@ export const resolvers = {
     },
     createBooking: async (_root: any, { input }: BookingArgs) => {
       const { userId, hotelId } = input;
-
+      console.log(userId, hotelId);
       // search for hotel
-      const hotel = await db.hotel.findUnique({
+      const hotel = await db.hotel.findFirst({
         where: { id: hotelId },
       });
+      console.log(hotel);
       // search for user
       const user = await db.user.findUnique({
         where: { id: userId },
       });
+      console.log(user);
       // if both are found create booking
       if (hotel && user) {
         let bookingData = {

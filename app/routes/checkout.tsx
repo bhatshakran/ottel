@@ -5,8 +5,11 @@ import {
 } from '@paypal/react-paypal-js';
 import type { PayPalScriptOptions } from '@paypal/paypal-js/types/script-options';
 import type { PayPalButtonsComponentOptions } from '@paypal/paypal-js/types/components/buttons';
-import type { LoaderFunction } from '@remix-run/node';
+import type { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { gql } from '@apollo/client';
+import { graphQLClient } from '~/lib/apollo';
+import React from 'react';
 
 const paypalScriptOptions: PayPalScriptOptions = {
   'client-id':
@@ -16,8 +19,18 @@ const paypalScriptOptions: PayPalScriptOptions = {
 
 interface Props {
   price: number;
+  hotelId: number;
+  userId: number;
+  setTransactionCompleted: any;
 }
-function Button({ price }: Props) {
+
+function Button({ price, hotelId, userId, setTransactionCompleted }: Props) {
+  // const [tranState, setTranState] = React.useState(false)
+
+  const tranComplete = () => {
+    setTransactionCompleted(true);
+  };
+
   const [{ isPending }] = usePayPalScriptReducer();
   const paypalbuttonTransactionProps: PayPalButtonsComponentOptions = {
     style: { layout: 'vertical' },
@@ -26,7 +39,7 @@ function Button({ price }: Props) {
         purchase_units: [
           {
             amount: {
-              value: `${price}`,
+              value: `${price / 100}`,
             },
           },
         ],
@@ -43,13 +56,9 @@ function Button({ price }: Props) {
        * }
        */
 
-      return actions.order?.capture().then((details) => {
-        alert(
-          'Transaction completed by' +
-            (details?.payer?.name?.given_name ?? 'No details')
-        );
-
-        alert('Data details: ' + JSON.stringify(data, null, 2));
+      return actions.order?.capture().then(async (details) => {
+        // setTranState(true)
+        tranComplete();
       });
     },
   };
@@ -64,19 +73,127 @@ function Button({ price }: Props) {
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const price = url.searchParams.get('price');
-  console.log(price);
-  return price;
+  const hotelId = url.searchParams.get('hotelId');
+  const userId = url.searchParams.get('userId');
+  return { price, hotelId, userId };
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  // create a booking for the user
+
+  const body = await request.formData();
+  const userId = body.get('userId');
+  const hotelId = body.get('hotelId');
+  const mutation = gql`
+    mutation createBooking($input: BookingInput) {
+      createBooking(input: $input) {
+        bookingId
+        bookerId
+        user {
+          name
+          id
+          avatar
+          income
+          walletId
+          bookings {
+            bookingId
+            userId
+            hotelId
+          }
+        }
+        hotel {
+          id
+          title
+          description
+          address
+          country
+          admin
+          city
+          bookings {
+            bookingId
+            userId
+            hotelId
+          }
+        }
+        hotelId
+      }
+    }
+  `;
+
+  const variables = {
+    input: {
+      userId: Number(userId),
+      hotelId: Number(hotelId),
+    },
+  };
+  const { data } = await graphQLClient.mutate({
+    mutation,
+    variables,
+  });
+  console.log(data);
+  return null;
 };
 
 export default function Checkout() {
-  const price = useLoaderData();
-  console.log(price);
+  const [transactionCompleted, setTransactionCompleted] = React.useState(false);
+
+  const { price, hotelId, userId } = useLoaderData();
+
+  React.useEffect(() => {
+    if (transactionCompleted === true) {
+      console.log(transactionCompleted);
+      (async function () {
+        const form = document.querySelector('form');
+        form?.submit();
+      })();
+    }
+  }, [transactionCompleted]);
+
   return (
     <div className='mt-20 flex items-center flex-col w-full '>
       <h2>Your total is: {price}$</h2>
       <PayPalScriptProvider options={paypalScriptOptions}>
-        <Button price={Number(price)} />
+        <Button
+          setTransactionCompleted={setTransactionCompleted}
+          price={Number(price)}
+          hotelId={Number(hotelId)}
+          userId={Number(userId)}
+        />
+        {transactionCompleted && 'completed transaction'}
       </PayPalScriptProvider>
+
+      <form action='' method='post'>
+        <input type='hidden' name='hotelId' value={hotelId} />
+        <input type='hidden' name='userId' value={userId} />
+      </form>
     </div>
   );
 }
+
+/*  const { data } = await graphQLClient.query({ query });
+
+          console.log(data);
+          if (data.createBooking === null) {
+            console.log('transaction not possible');
+          } else {
+            console.log('booking created');
+            console.log(data.createBooking);
+          } */
+/*    const query = gql`
+          query getHotels {
+            hotels(limit: 10) {
+              id
+              title
+              image
+              host
+              address
+              country
+              admin
+              city
+              bookings
+              price
+              numOfGuest
+            }
+          }
+        `;
+        const { data } = await graphQLClient.query({ query }); */

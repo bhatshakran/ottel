@@ -15,7 +15,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 12424,
+    price: 124,
     numOfGuest: 3,
   },
   {
@@ -30,7 +30,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 15806,
+    price: 158,
     numOfGuest: 3,
   },
   {
@@ -46,7 +46,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 4055,
+    price: 405,
     numOfGuest: 2,
   },
   {
@@ -61,7 +61,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 21292,
+    price: 212,
     numOfGuest: 4,
   },
   {
@@ -77,7 +77,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 20930,
+    price: 209,
     numOfGuest: 5,
   },
   {
@@ -93,7 +93,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 16836,
+    price: 168,
     numOfGuest: 2,
   },
   {
@@ -109,7 +109,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 2577,
+    price: 257,
     numOfGuest: 1,
   },
   {
@@ -124,7 +124,7 @@ const hotelsData = [
     admin: 'Ontario',
     city: 'Toronto',
     bookings: [],
-    price: 23903,
+    price: 239,
     numOfGuest: 4,
   },
   {
@@ -139,7 +139,7 @@ const hotelsData = [
     admin: 'Dubai',
     city: 'Dubai',
     bookings: [],
-    price: 21982,
+    price: 219,
     numOfGuest: 3,
   },
   {
@@ -169,7 +169,7 @@ const hotelsData = [
     admin: 'Dubai',
     city: 'Dubai',
     bookings: [],
-    price: 16162,
+    price: 161,
     numOfGuest: 4,
   },
   {
@@ -185,7 +185,7 @@ const hotelsData = [
     admin: 'Dubai',
     city: 'Dubai',
     bookings: [],
-    price: 11688,
+    price: 116,
     numOfGuest: 5,
   },
   {
@@ -201,7 +201,7 @@ const hotelsData = [
     admin: 'Dubai',
     city: 'Dubai',
     bookings: [],
-    price: 16843,
+    price: 168,
     numOfGuest: 4,
   },
   {
@@ -216,7 +216,7 @@ const hotelsData = [
     admin: 'Dubai',
     city: 'Dubai',
     bookings: [],
-    price: 3078,
+    price: 307,
     numOfGuest: 5,
   },
   {
@@ -231,7 +231,7 @@ const hotelsData = [
     admin: 'Dubai',
     city: 'Dubai',
     bookings: [],
-    price: 12127,
+    price: 121,
     numOfGuest: 2,
   },
   {
@@ -247,7 +247,7 @@ const hotelsData = [
     admin: 'Dubai',
     city: 'Dubai',
     bookings: [],
-    price: 19242,
+    price: 192,
     numOfGuest: 2,
   },
   {
@@ -263,7 +263,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 18127,
+    price: 181,
     numOfGuest: 2,
   },
   {
@@ -279,7 +279,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 22707,
+    price: 227,
     numOfGuest: 5,
   },
   {
@@ -293,7 +293,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 11845,
+    price: 118,
     numOfGuest: 4,
   },
   {
@@ -308,7 +308,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 13623,
+    price: 136,
     numOfGuest: 4,
   },
   {
@@ -324,7 +324,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 6879,
+    price: 687,
     numOfGuest: 3,
   },
   {
@@ -340,7 +340,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 14879,
+    price: 148,
     numOfGuest: 5,
   },
   {
@@ -356,7 +356,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 2778,
+    price: 277,
     numOfGuest: 5,
   },
   {
@@ -371,7 +371,7 @@ const hotelsData = [
     admin: 'California',
     city: 'Los Angeles',
     bookings: [],
-    price: 17777,
+    price: 177,
     numOfGuest: 3,
   },
   {
@@ -386,7 +386,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 19462,
+    price: 194,
     numOfGuest: 1,
   },
   {
@@ -401,7 +401,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 9425,
+    price: 942,
     numOfGuest: 4,
   },
   {
@@ -417,7 +417,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 1918,
+    price: 191,
     numOfGuest: 1,
   },
   {
@@ -433,7 +433,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 11349,
+    price: 113,
     numOfGuest: 5,
   },
   {
@@ -449,7 +449,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 23483,
+    price: 234,
     numOfGuest: 4,
   },
   {
@@ -465,7 +465,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 8721,
+    price: 872,
     numOfGuest: 4,
   },
   {
@@ -480,7 +480,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 5884,
+    price: 588,
     numOfGuest: 1,
   },
   {
@@ -495,7 +495,7 @@ const hotelsData = [
     admin: 'England',
     city: 'London',
     bookings: [],
-    price: 19649,
+    price: 196,
     numOfGuest: 4,
   },
   {
@@ -510,7 +510,7 @@ const hotelsData = [
     admin: 'California',
     city: 'San Francisco',
     bookings: [],
-    price: 22501,
+    price: 225,
     numOfGuest: 5,
   },
   {
@@ -525,7 +525,7 @@ const hotelsData = [
     admin: 'California',
     city: 'San Francisco',
     bookings: [],
-    price: 4051,
+    price: 405,
     numOfGuest: 5,
   },
   {
@@ -540,7 +540,7 @@ const hotelsData = [
     admin: 'California',
     city: 'San Francisco',
     bookings: [],
-    price: 9162,
+    price: 916,
     numOfGuest: 2,
   },
   {
@@ -556,7 +556,7 @@ const hotelsData = [
     admin: 'Quintana Roo',
     city: 'Cancún',
     bookings: [],
-    price: 24842,
+    price: 248,
     numOfGuest: 4,
   },
   {
@@ -571,7 +571,7 @@ const hotelsData = [
     admin: 'Quintana Roo',
     city: 'Cancún',
     bookings: [],
-    price: 23012,
+    price: 230,
     numOfGuest: 1,
   },
 ];

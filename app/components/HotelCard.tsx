@@ -20,7 +20,9 @@ const HotelCard: React.FC<HotelType> = ({ data }: HotelType) => {
         <img src={data.image ? data.image : ''} alt='' />
       </div>
       <div className='w-56 mt-3  font-silka flex flex-col gap-3  px-4'>
-        <h3 className='font-bold  text-secondary'>Price: ${data.price}</h3>
+        <h3 className='font-bold  text-secondary'>
+          Price: ${data.price}/night
+        </h3>
         <h3 className='text-sm'>{data.title}</h3>
         <h4 className=' text-xs font-bold'>
           {data.city}, {data.country}
