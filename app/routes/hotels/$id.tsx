@@ -97,7 +97,14 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 const Hotel = () => {
-  const { hotel, user } = useLoaderData();
+  const data = useLoaderData();
+  const { hotel } = data;
+  let id;
+
+  if (data.user) {
+    id = data.user.id;
+  }
+
   const actionData = useActionData();
   const [bookingError, setBookingError] = React.useState('');
   console.log(actionData && actionData);
@@ -111,7 +118,7 @@ const Hotel = () => {
   return (
     <main className=' bg-backgroundColor min-h-screen overflow-hidden flex justify-center  px-8 md:py-0'>
       <Container>
-        <Header id={user.id && user.id} />
+        <Header id={id ? id : null} />
 
         {bookingError && (
           <div className='border border-red-500 rounded-md w-full text-red-500 font-silka text-lg mt-8 py-4 px-2 flex justify-between'>
@@ -131,7 +138,7 @@ const Hotel = () => {
           <div className=' flex flex-wrap justify-between  items-start w-full h-1/2 gap-10'>
             <div className='w-full md:w-1/2  '>
               <img
-                src={hotel.image}
+                src={hotel && hotel.image}
                 alt=''
                 className='hotel-img w-full h-full rounded-md cursor-pointer'
               />
@@ -139,29 +146,32 @@ const Hotel = () => {
             <div className='w-full md:w-1/3  flex flex-col gap-16 font-silka'>
               <div className='flex flex-col gap-4 '>
                 <h2 className=' text-3xl  w-full text-black font-regis '>
-                  {hotel.title}
+                  {hotel && hotel.title}
                 </h2>
                 <h3 className=' text-blue-700'>
                   {' '}
-                  <PlaceIcon /> {hotel.address}
+                  <PlaceIcon /> {hotel && hotel.address}
                 </h3>
 
                 <h3 className='font-bold bg-black text-white p-2 rounded-md'>
-                  Price: ${hotel.price}
+                  Price: ${hotel && hotel.price}
                 </h3>
-                <h3 className='font-bold'>Guests: {hotel.numOfGuest}</h3>
                 <h3 className='font-bold'>
-                  City & Country: {hotel.city}, {hotel.country}
+                  Guests: {hotel && hotel.numOfGuest}
+                </h3>
+                <h3 className='font-bold'>
+                  City & Country: {hotel && hotel.city},{' '}
+                  {hotel && hotel.country}
                 </h3>
               </div>
-              {user ? (
+              {data.user ? (
                 <form
                   method='post'
                   className='w-full  ml-auto  flex flex-col gap-8  overflow-hidden'
                 >
                   <div className='font-silka flex flex-col gap-6 w-full'>
                     <div className='flex flex-col'>
-                      <input type='hidden' name='userid' value={user.id} />
+                      <input type='hidden' name='userid' value={data.user.id} />
                       <label htmlFor='checkin' className=' font-bold'>
                         Check in date:
                       </label>
@@ -184,7 +194,11 @@ const Hotel = () => {
                       />
                     </div>
                   </div>
-                  <input type='hidden' name='price' value={hotel.price} />
+                  <input
+                    type='hidden'
+                    name='price'
+                    value={hotel && hotel.price}
+                  />
                   <button
                     className='  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white'
                     type='submit'
