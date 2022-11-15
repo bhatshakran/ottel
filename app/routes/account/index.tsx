@@ -52,11 +52,13 @@ const Account = () => {
     <main className='bg-backgroundColor h-screen flex justify-center items-center'>
       <div className='border flex flex-col items-start border-lightorange p-4 gap-3 rounded-md w-auto'>
         <div className='w-full flex items-center gap-8'>
-          <img
-            src={user.avatar}
-            alt='user_avatar'
-            className='w-16 h-16 rounded-full'
-          />
+          <div className='relative '>
+            <img
+              src={user.avatar}
+              alt='user_avatar'
+              className='w-16 h-16 rounded-full'
+            />
+          </div>
           <div className='flex flex-col gap-y-3'>
             <h3 className='w-full font-silka'>Available avatars:</h3>
             <div className='flex gap-2'>
@@ -65,7 +67,7 @@ const Account = () => {
                   <img
                     src={img}
                     key={idx}
-                    className='w-10 h-10 rounded full'
+                    className='w-10 h-10 rounded full cursor-pointer'
                     alt='available_avatar '
                   />
                 );
