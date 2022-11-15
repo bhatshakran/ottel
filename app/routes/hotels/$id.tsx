@@ -229,5 +229,3 @@ const Hotel = () => {
 };
 
 export default Hotel;
-
-/* # DATABASE_URL='postgres://wkukmgmafkbmkc:eebbcb43027d009d664629542c609c64ce16627cfaba291b1a06ea150a00ee88@ec2-18-215-41-121.compute-1.amazonaws.com:5432/ddstbtvtj2iedt' */
