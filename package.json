@@ -28,7 +28,7 @@
     "react-dom": "^18.2.0",
     "remix-auth-google": "^1.1.0",
     "remix-auth-socials": "^1.0.2",
-    "stripe": "^10.17.0"
+    "tslib": "^2.4.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.7.4",
@@ -42,7 +42,6 @@
     "postcss": "^8.4.18",
     "prisma": "^4.6.1",
     "tailwindcss": "^3.2.1",
-    "tailwindcss-debug-screens": "^2.2.1",
     "typescript": "^4.7.4"
   },
   "engines": {
