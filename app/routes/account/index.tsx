@@ -82,7 +82,7 @@ const Account = () => {
   console.log(allBookings);
 
   return (
-    <main className='w-full bg-backgroundColor h-screen  '>
+    <main className='w-full bg-backgroundColor min-h-screen  '>
       <Container>
         <Header id={user.id} />
 
