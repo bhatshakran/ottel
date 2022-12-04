@@ -46,7 +46,6 @@ export default function Index() {
 
   return (
     <main className='bg-backgroundColor relative'>
-      {/* {isMenuActive && <Menu showMenu={showMenu} />} */}
       <Header id={id ? id : null} />
       <Banner />
       <Showcase data={hotels && hotels} />
