@@ -3,14 +3,12 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 const regis = localFont({
-	src: "./fonts/regis/Regis-Semibold.ttf",
+	src: "./fonts/regis/Regis-Regular.otf",
 	variable: "--font-regis",
-	weight: "100 900",
 });
 const silka = localFont({
 	src: "./fonts/silka/Silka-Regular.otf",
 	variable: "--font-silka",
-	weight: "100 900",
 });
 
 export const metadata: Metadata = {

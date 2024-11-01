@@ -10,7 +10,7 @@ import Footer from "./_components/footer";
 export default function Home() {
   const hotels: CardData[]= []
 	return (
-		<main className="bg-backgroundColor relative">
+		<main className="bg-backgroundColor relative text-black">
 			<Header />
 			<Banner />
 			<Showcase data={hotels} />
