@@ -5,9 +5,9 @@ import HotelCard from "../_components/hotelCard";
 const Hotels = async () => {
 	const hotels = await getHotels(100);
 	return (
-		<main className="bg-backgroundColor w-full pb-12">
-			<div className="w-full px-2 sm:px-8 md:px-0">
-				<div className="w-full flex items-center justify-between px-4 gap-0 py-24">
+		<main className="bg-backgroundColor w-full pb-12 px-4 md:px-12 lg:px-32">
+			<div className="w-full">
+				<div className="w-full flex items-center justify-between gap-0 py-24">
 					<h1 className="text-6xl font-regis">
 						<span className="text-secondary">Discover</span> Your Perfect
 						Getaway

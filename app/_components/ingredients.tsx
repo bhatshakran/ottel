@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Arrow from "./arrow";
+import Rectangles from "./rectangles";
 
 const Ingredients = () => {
 	return (
@@ -33,19 +34,7 @@ const Ingredients = () => {
 					width="1000"
 					height="750"
 				/>
-				<div className="w-full h-96 py-2 px-4 border border-secondary">
-					<div className="py-2 h-full px-4 border border-secondary">
-						<div className="py-2 px-4 h-full border border-secondary">
-							<div className="py-2 px-4 h-full border border-secondary">
-								<div className="py-2 px-4 h-full border border-secondary">
-									<div className="py-2 px-4 h-full border border-secondary">
-										<div className="py-2 px-4 h-full border border-secondary" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<Rectangles />
 			</div>
 		</div>
 	);

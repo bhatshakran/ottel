@@ -1,11 +1,17 @@
+'use client'
 import React from "react";
 import type { Hotel } from "../types/hotelTypes";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 const HotelCard = ({ data }: { data: Hotel }) => {
 	return (
 		<div className="rounded-md pb-4 cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 w-1/4 px-2">
-			<div className="overflow-hidden">
+			{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+			<div
+				className="overflow-hidden"
+				onClick={() => redirect(`hotels/${data.id}`)}
+			>
 				<Image
 					src={data.image ? data.image : ""}
 					alt="hotel_thumbnail"

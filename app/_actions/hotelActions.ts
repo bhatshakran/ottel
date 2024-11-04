@@ -1,6 +1,6 @@
 "use server";
 import { z } from "zod";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, ilike } from "drizzle-orm";
 import { db } from "../_db";
 import { booking, hotel } from "../_db/schema";
 import { unstable_cache } from "next/cache";
@@ -19,7 +19,6 @@ export const getHotels = unstable_cache(
 	["hotels"],
 	{ revalidate: 3600, tags: ["hotels"] },
 );
-
 
 export const getHotel = unstable_cache(
 	async (id: number) => {
@@ -84,4 +83,13 @@ export const createBooking = async (
 	redirect(
 		`/checkout?price=${data.price}&userId=${data.userId}&hotelId=${data.hotelId}`,
 	);
+};
+
+export const searchHotel = async (city: string) => {
+	try {
+		const hotels = await db.select().from(hotel).where(ilike(hotel.city, city));
+		return hotels;
+	} catch (error) {
+		console.log(error);
+	}
 };
