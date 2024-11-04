@@ -13,7 +13,7 @@ export const prismaMigrations = pgTable("_prisma_migrations", {
 });
 
 export const user = pgTable("User", {
-	id: serial().notNull(),
+	id: serial().notNull().primaryKey(),
 	passwordHash: text().notNull(),
 	name: text().notNull(),
 	avatar: text().notNull(),
@@ -27,7 +27,7 @@ export const user = pgTable("User", {
 });
 
 export const booking = pgTable("Booking", {
-	bookingId: serial().notNull(),
+	bookingId: serial().notNull().primaryKey(),
 	hotelId: integer().notNull(),
 	userId: integer().notNull(),
 }, (table) => {

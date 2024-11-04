@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { isUserVerified } from "../_actions/authActions";
 
-const Header = ({ id }: { id?: string }) => {
+const Header = async () => {
+	const isUserVerfied = await isUserVerified();
+
 	return (
 		<>
 			<div className="flex justify-between w-full font-regis bg-backgroundColor text-black px-4 md:px-12 lg:px-32 py-6">
@@ -13,10 +16,10 @@ const Header = ({ id }: { id?: string }) => {
 							<Link href="/hotels">Hotels</Link>
 						</li>
 						<li className="hover:text-secondary cursor-pointer">
-							{id ? (
+							{isUserVerfied ? (
 								<Link href="/account">Account</Link>
 							) : (
-								<Link href="/auth/login">Signup</Link>
+								<Link href="/auth">Signup</Link>
 							)}
 						</li>
 					</ul>

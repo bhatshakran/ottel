@@ -8,6 +8,7 @@ import { getHotels } from "./_actions/hotelActions";
 
 export default async function Home() {
 	const hotels = await getHotels(3);
+
 	return (
 		<main className="bg-backgroundColor relative text-black">
 			<Banner />
