@@ -14,7 +14,7 @@ const schema = z.object({
 });
 
 export const handleLogin = async (
-	prevState: { message: string },
+	prevState: { message: string } | null | undefined,
 	formData: FormData,
 ) => {
 	let redirectPath = "/auth";
@@ -61,11 +61,10 @@ export const handleLogin = async (
 };
 
 export const handleRegister = async (
-	prevState: { message: string },
+	prevState: { message: string } | null | undefined,
 	formData: FormData,
 ) => {
 	let redirectPath = "/auth";
-
 	//
 	const parse = schema.safeParse({
 		username: formData.get("username"),
@@ -110,7 +109,8 @@ export const handleRegister = async (
 		return {
 			message: "Failed to create user",
 		};
-	} finally {
+	} 
+	finally {
 		if (redirectPath) {
 			redirect(redirectPath);
 		}

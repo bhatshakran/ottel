@@ -20,6 +20,7 @@ export const getHotels = unstable_cache(
 	{ revalidate: 3600, tags: ["hotels"] },
 );
 
+
 export const getHotel = unstable_cache(
 	async (id: number) => {
 		const data = await db.select().from(hotel).where(eq(hotel.id, id));

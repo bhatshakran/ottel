@@ -16,7 +16,7 @@ const AuthenticationForm = () => {
 		authType === "login" ? handleLogin : handleRegister,
 		initialState,
 	);
-
+	console.log(formState)
 	//
 	return (
 		<form action={formAction} className="font-silka">
