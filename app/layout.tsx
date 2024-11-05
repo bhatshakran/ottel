@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${regis.variable} ${silka.variable} antialiased`}>
+			<body className={`${regis.variable} ${silka.variable} antialiased text-black`}>
 				<Header />
 				{children}
 			</body>

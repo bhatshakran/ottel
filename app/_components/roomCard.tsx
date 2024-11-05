@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Hotel } from "../types/hotelTypes";
+import type { Hotel } from "../_types/hotelTypes";
 
 interface Props {
 	hotel: Hotel;

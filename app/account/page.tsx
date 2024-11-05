@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { HandHelping } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -7,8 +7,8 @@ import {
 	getUserIdFromSession,
 	logout,
 } from "../_actions/authActions";
-import useSWR from "swr";
 import Skeleton from "../_components/skeleton";
+import useSWR from "swr";
 //
 const getUserDetailsAsync = async () => {
 	const userId = await getUserIdFromSession();

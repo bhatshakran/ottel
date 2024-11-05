@@ -1,12 +1,12 @@
-'use client'
+"use client";
 import React from "react";
-import type { Hotel } from "../types/hotelTypes";
+import type { Hotel } from "../_types/hotelTypes";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const HotelCard = ({ data }: { data: Hotel }) => {
 	return (
-		<div className="rounded-md pb-4 cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 w-1/4 px-2">
+		<div className="rounded-md pb-4 cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2">
 			{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 			<div
 				className="overflow-hidden"

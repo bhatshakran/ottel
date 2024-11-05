@@ -1,9 +1,23 @@
-import React from "react";
-import { getHotels } from "../_actions/hotelActions";
+"use client";
+import React, { useRef, useState } from "react";
+import { getHotels, searchHotel } from "../_actions/hotelActions";
 import HotelCard from "../_components/hotelCard";
+import useSWR from "swr";
+import Skeleton from "../_components/skeleton";
 
-const Hotels = async () => {
-	const hotels = await getHotels(100);
+const fetcher = async (searchTerm: string) => {
+	if (searchTerm.length > 0) {
+		return await searchHotel(searchTerm);
+	}
+	return await getHotels(100);
+};
+const Hotels = () => {
+	const searchTermRef = useRef<string>("");
+	const [searchTerm, setSearchTerm] = useState("");
+	const { data: hotels, isLoading } = useSWR(["getHotels", searchTerm], () =>
+		fetcher(searchTerm),
+	);
+	if (isLoading) return <Skeleton classes="size-24 fill-secondary" />;
 	return (
 		<main className="bg-backgroundColor w-full pb-12 px-4 md:px-12 lg:px-32">
 			<div className="w-full">
@@ -13,32 +27,37 @@ const Hotels = async () => {
 						Getaway
 					</h1>
 					<div className="p-6">
-						<form method="post" className="flex gap-2 w-full">
+						<div className="flex gap-2 w-full">
 							<input
 								type="text"
 								name="city"
 								id="cityInput"
 								placeholder="Enter a city"
+								onChange={(e) => {
+									searchTermRef.current = e.target.value;
+								}}
 								className="bg-transparent border border-lightorange w-full rounded-md px-4 font-silka py-2 focus:outline-none"
 							/>
 							<button
-								type="submit"
+								type="button"
+								onClick={() => {
+									if (searchTermRef.current) {
+										setSearchTerm(searchTermRef.current);
+									}
+								}}
 								className="bg-secondary text-white px-2 font-silka rounded-md hover:bg-backgroundColor hover:text-secondary hover:border hover:border-secondary disabled:bg-secondary disabled:cursor-not-allowed disabled:text-current disabled:border-none disabled:opacity-50"
 							>
 								{" "}
 								Search
 							</button>
-						</form>
+						</div>
 					</div>
 				</div>
 				<div className="w-full">
 					<div>
 						<div className="font-regis text-2xl">
 							{hotels ? (
-								<h2>
-									{" "}
-									<span className="italic text-secondary">Search </span> results{" "}
-								</h2>
+								<h2 className="text-secondary">Results</h2>
 							) : (
 								<h2>
 									<span className="italic text-secondary"> Trending</span>{" "}
@@ -49,7 +68,7 @@ const Hotels = async () => {
 					</div>
 					<div className="flex flex-wrap justify-center mt-6">
 						{
-							hotels.map((hotel) => {
+							hotels?.map((hotel) => {
 								return <HotelCard key={hotel.id} data={hotel} />;
 							})
 							// : hotels.map((hotel: Hotel) => {

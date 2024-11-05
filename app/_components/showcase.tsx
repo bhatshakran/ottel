@@ -1,4 +1,4 @@
-import type { Hotel } from "../types/hotelTypes";
+import type { Hotel } from "../_types/hotelTypes";
 import RoomCard from "./roomCard";
 
 interface ShowcaseProps {
