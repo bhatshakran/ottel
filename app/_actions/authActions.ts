@@ -166,7 +166,7 @@ export const getUserDetails = cache(async (userId: string) => {
 
 export const updateUserDetails = cache(
 	async (
-		prevState: { message: string; type: "info" | "error" },
+		prevState: { message: string; type: string },
 		formData: FormData,
 	) => {
 		try {
