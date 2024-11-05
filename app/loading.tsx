@@ -1,4 +1,5 @@
-import Skeleton from "@/app/_components/skeleton";
+import React from "react";
+import Skeleton from "./_components/skeleton";
 
 const Loading = () => {
 	return <Skeleton classes="size-24 fill-secondary" />;

@@ -5,8 +5,14 @@ import { db } from "../_db";
 import { user } from "../_db/schema";
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
-import { createSession, deleteSession, getSession } from "../_lib/session";
+import {
+	createSession,
+	decrypt,
+	deleteSession,
+	getSession,
+} from "../_lib/session";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
 const schema = z.object({
 	username: z.string(),
@@ -109,8 +115,7 @@ export const handleRegister = async (
 		return {
 			message: "Failed to create user",
 		};
-	} 
-	finally {
+	} finally {
 		if (redirectPath) {
 			redirect(redirectPath);
 		}
@@ -131,3 +136,31 @@ export const isUserVerified = async () => {
 	}
 	return false;
 };
+
+export const getUserIdFromSession = async () => {
+	const session = await getSession();
+	if (session) {
+		const payload = await decrypt(session.value);
+		if (payload) {
+			const userId = payload.userId as string;
+			return userId;
+		}
+		return null
+	}
+	return null
+};
+
+export const getUserDetails = cache(async (userId: string) => {
+	try {
+		const userDetails = await db
+			.select({name:user.name, id:user.id})
+			.from(user)
+			.where(eq(user.id, Number(userId)));
+		if (userDetails.length > 0) {
+			console.log(userDetails, "log");
+			return userDetails[0];
+		}
+	} catch (error) {
+		console.log(error);
+	}
+});
