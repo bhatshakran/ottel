@@ -21,12 +21,12 @@ const Hotels = () => {
 	return (
 		<main className="bg-backgroundColor w-full pb-12 px-4 md:px-12 lg:px-32">
 			<div className="w-full">
-				<div className="w-full flex items-center justify-between gap-0 py-24">
+				<div className="w-full flex flex-wrap items-center justify-between gap-3 py-24">
 					<h1 className="text-6xl font-regis">
 						<span className="text-secondary">Discover</span> Your Perfect
 						Getaway
 					</h1>
-					<div className="p-6">
+					<div className="w-full lg:w-auto">
 						<div className="flex gap-2 w-full">
 							<input
 								type="text"
@@ -71,9 +71,6 @@ const Hotels = () => {
 							hotels?.map((hotel) => {
 								return <HotelCard key={hotel.id} data={hotel} />;
 							})
-							// : hotels.map((hotel: Hotel) => {
-							// 		return <HotelCard key={hotel.id} data={hotel} />;
-							// 	})}
 						}
 					</div>
 				</div>

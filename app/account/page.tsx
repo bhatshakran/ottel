@@ -56,7 +56,7 @@ const Account = () => {
 						Logout
 					</button>
 				</div>
-				<div className="md:w-[600px] border-l">
+				<div className="w-full md:w-[600px] border-l">
 					{(() => {
 						switch (activeTab) {
 							case "support":
@@ -88,15 +88,15 @@ const Account = () => {
 												Get started
 											</button>
 										</div>
-										<div className="space-y-4 px-6 mt-4">
-											<div className="flex gap-x-3 text-lg items-center">
+										<div className="space-y-4 px-6 mt-4 w-full">
+											<div className="flex gap-x-3 text-lg items-center w-full">
 												<HandHelping className="size-8" />
 												<label htmlFor="help">What can we help you with?</label>
 											</div>
 											<select
 												name="help"
 												id="help"
-												className="border rounded-md border-lightorange px-3 py-2"
+												className="border rounded-md border-lightorange px-3 py-2 w-full"
 											>
 												<option value="topic" defaultChecked>
 													Select topic
@@ -119,7 +119,7 @@ const Account = () => {
 								);
 							default:
 								return (
-									<div className="flex flex-col gap-y-4 px-12 py-16">
+									<div className="flex flex-col gap-y-4 px-12 py-6 md:py-16">
 										<Image
 											src={
 												"https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"
