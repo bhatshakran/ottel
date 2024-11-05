@@ -17,10 +17,13 @@ const BookingForm = ({
 
 	return (
 		<>
-			<div className="rounded-md w-full text-red-500 font-silka text-lg py-4 px-2 flex gap-x-3">
+			{formState.message && (
+				<div className="rounded-md w-full text-red-500 font-silka text-lg py-4 px-2 flex gap-x-3">
 					<CircleX />
 					{formState?.message}
-			</div>
+				</div>
+			)}
+
 			<form
 				action={formAction}
 				className="w-full ml-auto flex flex-col gap-8 overflow-hidden"
@@ -53,7 +56,7 @@ const BookingForm = ({
 					</div>
 				</div>
 				<button
-					className="  flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white"
+					className="flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white"
 					type="submit"
 				>
 					Request to book

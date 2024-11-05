@@ -15,8 +15,8 @@ import { redirect } from "next/navigation";
 import { cache } from "react";
 
 const schema = z.object({
-	username: z.string(),
-	password: z.string(),
+	username: z.string().min(5),
+	password: z.string().min(5),
 });
 
 export const handleLogin = async (
@@ -145,15 +145,15 @@ export const getUserIdFromSession = async () => {
 			const userId = payload.userId as string;
 			return userId;
 		}
-		return null
+		return null;
 	}
-	return null
+	return null;
 };
 
 export const getUserDetails = cache(async (userId: string) => {
 	try {
 		const userDetails = await db
-			.select({name:user.name, id:user.id})
+			.select({ name: user.name, id: user.id })
 			.from(user)
 			.where(eq(user.id, Number(userId)));
 		if (userDetails.length > 0) {
@@ -163,3 +163,59 @@ export const getUserDetails = cache(async (userId: string) => {
 		console.log(error);
 	}
 });
+
+export const updateUserDetails = cache(
+	async (
+		prevState: { message: string; type: "info" | "error" },
+		formData: FormData,
+	) => {
+		try {
+			const schema = z.object({
+				username: z.string().min(5),
+				password: z.string().min(5).optional(),
+				userId: z.string().min(1),
+			});
+			const parse = schema.safeParse({
+				username: formData.get("username"),
+				...(formData.get("password")
+					? { password: formData.get("password") }
+					: {}),
+				userId: formData.get("userId"),
+			});
+			if (!parse.success) {
+				return { message: "Failed to create account!", type: "error" };
+			}
+			const data = parse.data;
+			let passwordHash = "";
+			if (data.password) {
+				passwordHash = await bcrypt.hash(data.password, 10);
+			}
+			//
+			const userDetails = await db
+				.update(user)
+				.set({
+					name: data.username,
+					...(data.password ? { passwordHash: passwordHash } : {}),
+				})
+				.where(eq(user.id, Number(data.userId)))
+				.returning();
+			//
+			if (userDetails.length > 0) {
+				return {
+					message: "User details updated successfully!",
+					type: "info",
+				};
+			}
+			return {
+				message: "Failed to create account",
+				type: "error",
+			};
+		} catch (error) {
+			console.log(error);
+			return {
+				message: "Could not update details. Please try again!",
+				type: "error",
+			};
+		}
+	},
+);

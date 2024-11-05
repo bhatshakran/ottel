@@ -1,11 +1,12 @@
-'use client'
-import { HandHelping } from "lucide-react";
+"use client";
+import { CircleX, HandHelping } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useActionState, useRef, useState } from "react";
 import {
 	getUserDetails,
 	getUserIdFromSession,
 	logout,
+	updateUserDetails,
 } from "../_actions/authActions";
 import Skeleton from "../_components/skeleton";
 import useSWR from "swr";
@@ -22,12 +23,24 @@ const getUserDetailsAsync = async () => {
 };
 //
 const Account = () => {
-	const [activeTab, setActiveTab] = useState("account");
-	const { data: user, isLoading } = useSWR(
-		"getUserDetails",
-		getUserDetailsAsync,
+	const {
+		data: user,
+		mutate,
+		isLoading,
+	} = useSWR("getUserDetails", getUserDetailsAsync);
+	//
+	const initialState = {
+		message: "",
+		type: "info",
+	};
+	const [formState, formAction, isPending] = useActionState(
+		updateUserDetails,
+		initialState,
 	);
+	const [activeTab, setActiveTab] = useState("account");
+	const usernameRef = useRef<string>(user?.name || "");
 
+	//
 	if (isLoading) return <Skeleton classes="size-24 fill-secondary" />;
 	if (!user) return <div>Failed to load</div>;
 	return (
@@ -132,31 +145,56 @@ const Account = () => {
 										<h2 className="text-4xl font-semibold font-regis">
 											My Account
 										</h2>
-										<div className="flex flex-col max-w-80">
-											<label htmlFor="username">Username</label>
-											<input
-												type="text"
-												name="username"
-												className="border px-3 py-2 rounded-md border-secondary"
-												value={user.name}
-												onChange={() => {}}
-											/>
-										</div>
-										<div className="flex flex-col max-w-80">
-											<label htmlFor="password">Update password</label>
-											<input
-												type="text"
-												name="password"
-												className="border px-3 py-2 rounded-md border-secondary"
-												placeholder="*******"
-											/>
-										</div>
-										<button
-											type="button"
-											className="bg-secondary px-3 py-2 rounded-md text-white max-w-36"
+										<form
+											action={formAction}
+											className="flex flex-col gap-6 max-w-80"
 										>
-											Save changes
-										</button>
+											{formState.message.length > 0 && !isPending && (
+												<p
+													className={`flex gap-2 ${formState.type === "info" ? "text-green-500" : "text-red-500"}`}
+												>
+													{formState.type !== "info" && <CircleX />}
+													{formState.message}
+												</p>
+											)}
+											<div className="flex flex-col gap-y-2 max-w-80">
+												<label htmlFor="username">Username</label>
+												<input
+													type="text"
+													name="username"
+													className="border px-3 py-2 rounded-md border-secondary"
+													defaultValue={user.name}
+													min={5}
+													onChange={(e) => {
+														usernameRef.current = e.target.value;
+													}}
+												/>
+											</div>
+
+											<div className="flex flex-col gap-y-2 max-w-80">
+												<label htmlFor="password">Update password</label>
+												<input
+													type="password"
+													name="password"
+													className="border px-3 py-2 rounded-md border-secondary"
+													placeholder="*******"
+												/>
+												<input
+													hidden
+													value={user.id}
+													onChange={() => {}}
+													name="userId"
+												/>
+											</div>
+											<button
+												type="submit"
+												onClick={() => mutate()}
+												disabled={isPending}
+												className="bg-secondary px-3 py-2 rounded-md text-white max-w-36"
+											>
+												Save changes
+											</button>
+										</form>
 									</div>
 								);
 						}

@@ -16,7 +16,7 @@ const AuthenticationForm = () => {
 		authType === "login" ? handleLogin : handleRegister,
 		initialState,
 	);
-	console.log(formState)
+	console.log(formState);
 	//
 	return (
 		<form action={formAction} className="font-silka">
@@ -37,11 +37,6 @@ const AuthenticationForm = () => {
 					placeholder="username"
 					minLength={3}
 				/>
-				{/* {actionData?.fieldErrors?.username ? (
-								<p className="text-red-500" role="alert" id="name-error">
-									{actionData.fieldErrors.username}
-								</p>
-							) : null} */}
 
 				<input
 					name="password"
@@ -50,18 +45,6 @@ const AuthenticationForm = () => {
 					type="password"
 					placeholder="password"
 				/>
-				{/* {actionData?.fieldErrors?.password ? (
-								<p className="text-red-500" role="alert" id="password-error">
-									{actionData.fieldErrors.password}
-								</p>
-							) : null} */}
-			</div>
-			<div id="form-error-message">
-				{/* {actionData?.formError ? (
-								<p className="text-red-500" role="alert">
-									{actionData.formError}
-								</p>
-							) : null} */}
 			</div>
 
 			<button
