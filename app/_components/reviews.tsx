@@ -42,7 +42,7 @@ const Reviews = () => {
 						<div className="w-96">
 							<p className="font-silka ">
 								It is littered with antiques, art works, a bright red grand
-								piano for the bar, asymmetrical carpets-- if I'm honest, this
+								piano for the bar, asymmetrical carpets-- if I&apos;m honest, this
 								hotel itself needs to be on itineraries. The views are insane,
 								and uif you want to react peak relaxation, the spa is the place
 								to be.

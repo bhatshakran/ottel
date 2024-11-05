@@ -4,7 +4,7 @@ import { MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const Hotel = async ({ params }: { params: { id: string } }) => {
+const Hotel = async ({ params }: { params: Promise<{ id: string }> }) => {
 	const { id } = await params;
 	const data = { user: { id: 0 } };
 	const hotel = await getHotel(Number(id));
@@ -28,7 +28,6 @@ const Hotel = async ({ params }: { params: { id: string } }) => {
 								{hotel?.title}
 							</h2>
 							<h3 className=" text-blue-700">
-								{" "}
 								<MapPin /> {hotel?.address}
 							</h3>
 

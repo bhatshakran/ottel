@@ -12,16 +12,22 @@ export interface Hotel {
 	numOfGuest: number;
 }
 
-export interface UserProps{
+export interface UserProps {
 	name: string;
-    id: number;
-    passwordHash: string;
-    avatar: string;
-    contact: string;
-    walletId: string;
-    income: number;
+	id: number;
+	passwordHash: string;
+	avatar: string;
+	contact: string;
+	walletId: string;
+	income: number;
+}
+
+export interface BookingProps {
+	bookingId: string;
+	hotelId: number;
+	userId: number;
 }
 
 export interface CardDataProps extends Hotel {
-	bookings: any[] | null;
+	bookings: BookingProps[] | null;
 }

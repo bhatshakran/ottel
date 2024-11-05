@@ -157,7 +157,6 @@ export const getUserDetails = cache(async (userId: string) => {
 			.from(user)
 			.where(eq(user.id, Number(userId)));
 		if (userDetails.length > 0) {
-			console.log(userDetails, "log");
 			return userDetails[0];
 		}
 	} catch (error) {
