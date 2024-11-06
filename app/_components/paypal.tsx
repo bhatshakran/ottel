@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { type Dispatch } from "react";
 import { useEffect, useState } from "react";
 import {
 	PayPalScriptProvider,
@@ -15,7 +15,7 @@ const paypalScriptOptions: PayPalScriptOptions = {
 
 interface Props {
 	price: number;
-	setTransactionCompleted: any;
+	setTransactionCompleted: Dispatch<boolean>;
 }
 
 function Button({ price, setTransactionCompleted }: Props) {
@@ -33,10 +33,18 @@ function Button({ price, setTransactionCompleted }: Props) {
 				purchase_units: [
 					{
 						amount: {
+							currency_code: "USD",
 							value: `${price / 100}`,
+							breakdown: {
+								item_total: {
+									currency_code: "USD",
+									value: `${price / 100}`,
+								},
+							},
 						},
 					},
 				],
+				intent: "CAPTURE",
 			});
 		},
 		async onApprove(data, actions) {
@@ -50,7 +58,7 @@ function Button({ price, setTransactionCompleted }: Props) {
 			 * }
 			 */
 
-			return actions.order?.capture().then(async (details) => {
+			return actions.order?.capture().then(async () => {
 				// setTranState(true)
 				tranComplete();
 			});
