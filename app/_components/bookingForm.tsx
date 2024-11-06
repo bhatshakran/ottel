@@ -2,7 +2,7 @@
 import React, { useActionState } from "react";
 import Arrow from "./arrow";
 import { createBooking } from "../_actions/hotelActions";
-import { CircleX } from "lucide-react";
+import { CircleX, Loader } from "lucide-react";
 
 const BookingForm = ({
 	userId,
@@ -13,13 +13,16 @@ const BookingForm = ({
 		message: "",
 	};
 
-	const [formState, formAction] = useActionState(createBooking, initialState);
+	const [formState, formAction, isPending] = useActionState(
+		createBooking,
+		initialState,
+	);
 
 	return (
 		<>
 			{formState.message && (
 				<div className="rounded-md w-full text-red-500 font-silka text-lg py-4 px-2 flex gap-x-3">
-					<CircleX />
+					<CircleX className="size-6"/>
 					{formState?.message}
 				</div>
 			)}
@@ -56,9 +59,11 @@ const BookingForm = ({
 					</div>
 				</div>
 				<button
-					className="flex items-center justify-center gap-2 p-2 rounded-full font-silka bg-lightorange text-white"
+					disabled={isPending}
+					className="flex items-center justify-center gap-2 p-2 rounded-full font-silka disabled:opacity-30 bg-lightorange text-white"
 					type="submit"
 				>
+					{isPending && <Loader className="animate-spin" />}
 					Request to book
 					<Arrow />
 				</button>

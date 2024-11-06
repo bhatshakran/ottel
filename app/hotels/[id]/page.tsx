@@ -27,11 +27,11 @@ const Hotel = async ({ params }: { params: Promise<{ id: string }> }) => {
 							<h2 className=" text-3xl  w-full text-black font-regis ">
 								{hotel?.title}
 							</h2>
-							<h3 className=" text-blue-700">
+							<h3 className="text-blue-700 flex gap-3 items-center">
 								<MapPin /> {hotel?.address}
 							</h3>
 
-							<h3 className="font-bold bg-black text-white p-2 rounded-md">
+							<h3 className="font-bold bg-black text-white py-2 rounded-md w-fit px-3">
 								Price: ${hotel?.price}
 							</h3>
 							<h3 className="font-bold">Guests: {hotel?.numOfGuest}</h3>

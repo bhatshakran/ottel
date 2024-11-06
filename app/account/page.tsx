@@ -1,5 +1,5 @@
 "use client";
-import { CircleX, HandHelping } from "lucide-react";
+import { CircleX, HandHelping, Loader } from "lucide-react";
 import Image from "next/image";
 import React, { useActionState, useRef, useState } from "react";
 import {
@@ -39,7 +39,6 @@ const Account = () => {
 	);
 	const [activeTab, setActiveTab] = useState("account");
 	const usernameRef = useRef<string>(user?.name || "");
-
 	//
 	if (isLoading) return <Skeleton classes="size-24 fill-secondary" />;
 	if (!user) return <div>Failed to load</div>;
@@ -190,8 +189,9 @@ const Account = () => {
 												type="submit"
 												onClick={() => mutate()}
 												disabled={isPending}
-												className="bg-secondary px-3 py-2 rounded-md text-white max-w-36"
+												className="bg-secondary px-3 py-2 rounded-md text-white w-fit disabled:bg-opacity-30 flex gap-3 justify-center"
 											>
+												{isPending && <Loader className="animate-spin"/>}
 												Save changes
 											</button>
 										</form>
