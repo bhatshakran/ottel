@@ -9,7 +9,6 @@ interface Props {
 }
 
 const BookingCard = (props: Props) => {
-	console.log(props.bookingHotel);
 	return (
 		<div className="flex gap-x-4 bg-backgroundColor shadow-sm px-6 py-2 rounded-md">
 			<div>
