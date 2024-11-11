@@ -1,7 +1,7 @@
 "use client";
 import React, { useActionState } from "react";
 import Arrow from "./arrow";
-import { createBooking } from "../_actions/hotelActions";
+import { checkBooking } from "../_actions/hotelActions";
 import { CircleX, Loader } from "lucide-react";
 
 const BookingForm = ({
@@ -14,7 +14,7 @@ const BookingForm = ({
 	};
 
 	const [formState, formAction, isPending] = useActionState(
-		createBooking,
+		checkBooking,
 		initialState,
 	);
 
@@ -22,7 +22,7 @@ const BookingForm = ({
 		<>
 			{formState.message && (
 				<div className="rounded-md w-full text-red-500 font-silka text-lg py-4 px-2 flex gap-x-3">
-					<CircleX className="size-6"/>
+					<CircleX className="size-6" />
 					{formState?.message}
 				</div>
 			)}
@@ -43,7 +43,7 @@ const BookingForm = ({
 							type="date"
 							name="checkInDate"
 							id="checkInDate"
-							className="focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange"
+							className="focus:outline-none w-fit cursor-pointer px-2 py-1 rounded-full border border-lightorange"
 						/>
 					</div>
 					<div className="flex flex-col">
@@ -54,7 +54,7 @@ const BookingForm = ({
 							type="date"
 							name="checkOutDate"
 							id="checkOutDate"
-							className="focus:outline-none cursor-pointer px-2 py-1 rounded-full border border-lightorange"
+							className="focus:outline-none w-fit cursor-pointer px-2 py-1 rounded-full border border-lightorange"
 						/>
 					</div>
 				</div>

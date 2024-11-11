@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { and, desc, eq, ilike } from "drizzle-orm";
 import { db } from "../_db";
-import { booking, hotel } from "../_db/schema";
+import { booking, hotel, user } from "../_db/schema";
 import { runValidation } from "../_utils/dateValidator";
 import { redirect } from "next/navigation";
 import { cache } from "react";
@@ -39,7 +39,7 @@ export const doesBookingExist = cache(
 	},
 );
 
-export const createBooking = async (
+export const checkBooking = async (
 	prevState: { message: string },
 	formData: FormData,
 ) => {
@@ -88,3 +88,46 @@ export const searchHotel = cache(async (city: string) => {
 		console.log(error);
 	}
 });
+
+export const createBooking = cache(
+	async (prevState: { message: string }, formData: FormData) => {
+		const schema = z.object({
+			userId: z.string(),
+			hotelId: z.string(),
+		});
+		const parse = schema.safeParse({
+			userId: formData.get("userId"),
+			hotelId: formData.get("hotelId"),
+		});
+		if (!parse.success) {
+			return { message: "Failed to create booking!" };
+		}
+		const data = parse.data;
+		try {
+			if (data) {
+				// Check if hotel exists
+				const hotelExists = await db
+					.select()
+					.from(hotel)
+					.where(eq(hotel.id, Number(data.hotelId)));
+				// Check if user exists
+				const userExists = await db
+					.select()
+					.from(user)
+					.where(eq(user.id, Number(data.userId)));
+				if (hotelExists.length > 0 && userExists.length > 0) {
+					await db.insert(booking).values({
+						hotelId: Number(data.hotelId),
+						userId: Number(data.userId),
+					});
+					return { message: "Booking created", success: true };
+				}
+			}
+
+			return { message: "Failed to create booking", success: false };
+		} catch (error) {
+			console.log(error);
+			return { message: "Failed to create booking", success: false };
+		}
+	},
+);

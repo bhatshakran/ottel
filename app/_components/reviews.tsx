@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Reviews = () => {
 	return (
-		<div className="border-t border-gray-500 mt-16">
+		<div className="border-t border-gray-500 my-40">
 			<div className="max-w-6xl mx-auto px-4 md:px-0 mt-16 pb-16">
 				<h2 className="text-center font-regis text-4xl py-16">
 					What customers are saying

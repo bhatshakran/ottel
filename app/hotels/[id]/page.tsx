@@ -10,7 +10,7 @@ const Hotel = async ({ params }: { params: Promise<{ id: string }> }) => {
 	const hotel = await getHotel(Number(id));
 	//
 	return (
-		<main className="bg-backgroundColor min-h-screen overflow-hidden flex justify-center w-full px-8 md:py-0">
+		<main className="max-h-screen overflow-hidden flex justify-center w-full px-8 md:py-0">
 			<div className="flex flex-col justify-start items-center h-full my-24 ">
 				<div className=" flex flex-wrap justify-between  items-start w-full h-1/2 gap-10">
 					<div className="w-full md:w-1/2  ">
@@ -52,6 +52,7 @@ const Hotel = async ({ params }: { params: Promise<{ id: string }> }) => {
 								</h3>
 								<Link
 									href="/auth/login"
+									scroll={false}
 									className="text-center bg-secondary text-white p-2 rounded-md font-silka hover:bg-transparent hover:border hover:border-secondary hover:text-black"
 								>
 									Login
