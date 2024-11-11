@@ -131,3 +131,18 @@ export const createBooking = cache(
 		}
 	},
 );
+
+export const getBookings = cache(async (userId: string) => {
+	try {
+		const bookings = await db
+			.select()
+			.from(booking)
+			.where(eq(booking.userId, Number(userId)))
+			.innerJoin(hotel, eq(booking.hotelId, hotel.id));
+		return bookings;
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+

@@ -10,6 +10,8 @@ import {
 } from "../_actions/authActions";
 import Skeleton from "../_components/skeleton";
 import useSWR from "swr";
+import { getBookings } from "../_actions/hotelActions";
+import BookingCard from "../_components/bookingCard";
 //
 const getUserDetailsAsync = async () => {
 	const userId = await getUserIdFromSession();
@@ -22,12 +24,25 @@ const getUserDetailsAsync = async () => {
 	return null;
 };
 //
+const getUserBookings = async () => {
+	const userId = await getUserIdFromSession();
+	if (userId) {
+		const bookings = await getBookings(userId);
+		if (bookings) {
+			return bookings;
+		}
+	}
+	return null;
+};
+//
 const Account = () => {
 	const {
 		data: user,
 		mutate,
 		isLoading,
 	} = useSWR("getUserDetails", getUserDetailsAsync);
+	const { data: bookings } = useSWR("getUserBookings", getUserBookings);
+
 	//
 	const initialState = {
 		message: "",
@@ -55,6 +70,13 @@ const Account = () => {
 					</button>
 					<button
 						type="button"
+						className={`w-full text-left hover:text-secondary ${activeTab === "bookings" ? "text-secondary" : "text-black"}`}
+						onClick={() => setActiveTab("bookings")}
+					>
+						My Bookings
+					</button>
+					<button
+						type="button"
 						className={`w-full text-left hover:text-secondary ${activeTab === "support" ? "text-secondary" : "text-black"}`}
 						onClick={() => setActiveTab("support")}
 					>
@@ -71,6 +93,29 @@ const Account = () => {
 				<div className="w-full md:w-[600px] border-l">
 					{(() => {
 						switch (activeTab) {
+							case "bookings":
+								return (
+									<div className="flex flex-col justify-start items-start w-full gap-y-6 py-12 px-6">
+										<h2 className="text-2xl font-semibold">My Bookings</h2>
+										<div>
+											{bookings && bookings.length > 0 ? (
+												<div className="flex flex-wrap gap-4">
+													{bookings.map((booking) => {
+														return (
+															<BookingCard
+																bookingHotel={booking.Hotel}
+																bookingId={booking.Booking.bookingId}
+																key={booking.Booking.bookingId}
+															/>
+														);
+													})}
+												</div>
+											) : (
+												<>No bookings yet</>
+											)}
+										</div>
+									</div>
+								);
 							case "support":
 								return (
 									<div className="flex flex-col justify-start items-start w-full gap-y-6 pb-12">
@@ -191,7 +236,7 @@ const Account = () => {
 												disabled={isPending}
 												className="bg-secondary px-3 py-2 rounded-md text-white w-fit disabled:bg-opacity-30 flex gap-3 justify-center"
 											>
-												{isPending && <Loader className="animate-spin"/>}
+												{isPending && <Loader className="animate-spin" />}
 												Save changes
 											</button>
 										</form>
