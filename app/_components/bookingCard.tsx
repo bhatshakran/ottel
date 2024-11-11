@@ -10,8 +10,7 @@ interface Props {
 
 const BookingCard = (props: Props) => {
 	return (
-		<div className="flex gap-x-4 bg-backgroundColor shadow-sm px-6 py-2 rounded-md">
-			<div>
+		<div className="flex gap-x-4 bg-backgroundColor shadow-sm px-6 py-2 rounded-md w-full">
 				<Image
 					src={props.bookingHotel.image}
 					width={1000}
@@ -19,9 +18,8 @@ const BookingCard = (props: Props) => {
 					className="w-32 h-24 rounded-md"
 					alt="booking_thumb"
 				/>
-			</div>
-			<div className="space-y-2">
-				<div className="flex items-center justify-between">
+			<div className="space-y-2 flex-grow">
+				<div className="flex items-center justify-between w-full">
 					<h5 className="text-xl text-secondary font-regis">
 						{props.bookingHotel.title}
 					</h5>

@@ -164,6 +164,17 @@ export const getUserDetails = cache(async (userId: string) => {
 	}
 });
 
+export const getUserDetailsAsync = async () => {
+	const userId = await getUserIdFromSession();
+	if (userId) {
+		const user = await getUserDetails(userId);
+		if (user) {
+			return user;
+		}
+	}
+	return null;
+};
+
 export const updateUserDetails = cache(
 	async (
 		prevState: { message: string; type: string },

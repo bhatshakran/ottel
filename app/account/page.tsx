@@ -3,7 +3,7 @@ import { CircleX, HandHelping, Loader } from "lucide-react";
 import Image from "next/image";
 import React, { useActionState, useRef, useState } from "react";
 import {
-	getUserDetails,
+	getUserDetailsAsync,
 	getUserIdFromSession,
 	logout,
 	updateUserDetails,
@@ -13,16 +13,7 @@ import useSWR from "swr";
 import { getBookings } from "../_actions/hotelActions";
 import BookingCard from "../_components/bookingCard";
 //
-const getUserDetailsAsync = async () => {
-	const userId = await getUserIdFromSession();
-	if (userId) {
-		const user = await getUserDetails(userId);
-		if (user) {
-			return user;
-		}
-	}
-	return null;
-};
+
 //
 const getUserBookings = async () => {
 	const userId = await getUserIdFromSession();

@@ -36,3 +36,8 @@ body {
 }
 
 }
+@layer components{
+  .featurecard {
+    background: linear-gradient(to bottom, #f56b1591, white);
+  }
+}

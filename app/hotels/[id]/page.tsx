@@ -1,13 +1,16 @@
+
 import BookingForm from "@/app/_components/bookingForm";
 import { getHotel } from "@/app/_actions/hotelActions";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { getUserDetailsAsync } from "@/app/_actions/authActions";
+
 
 const Hotel = async ({ params }: { params: Promise<{ id: string }> }) => {
 	const { id } = await params;
-	const data = { user: { id: 0 } };
 	const hotel = await getHotel(Number(id));
+	const user = await getUserDetailsAsync()
 	//
 	return (
 		<main className="max-h-screen overflow-hidden flex justify-center w-full px-8 md:py-0">
@@ -39,9 +42,9 @@ const Hotel = async ({ params }: { params: Promise<{ id: string }> }) => {
 								City & Country: {hotel?.city}, {hotel?.country}
 							</h3>
 						</div>
-						{data.user ? (
+						{user ? (
 							<BookingForm
-								userId={0}
+								userId={user.id}
 								hotelId={Number(id)}
 								price={hotel.price}
 							/>
@@ -51,7 +54,7 @@ const Hotel = async ({ params }: { params: Promise<{ id: string }> }) => {
 									In order to book, you need to login/register
 								</h3>
 								<Link
-									href="/auth/login"
+									href="/auth"
 									scroll={false}
 									className="text-center bg-secondary text-white p-2 rounded-md font-silka hover:bg-transparent hover:border hover:border-secondary hover:text-black"
 								>

@@ -116,11 +116,24 @@ export const createBooking = cache(
 					.from(user)
 					.where(eq(user.id, Number(data.userId)));
 				if (hotelExists.length > 0 && userExists.length > 0) {
+					const bookingExists = await doesBookingExist(
+						data.userId,
+						data.hotelId,
+					);
+					if (bookingExists) {
+						return {
+							message: "Booking already exists for this hotel",
+							success: false,
+						};
+					}
 					await db.insert(booking).values({
 						hotelId: Number(data.hotelId),
 						userId: Number(data.userId),
 					});
-					return { message: "Booking created", success: true };
+					return {
+						message: "Booking created successfully 🎉🚀",
+						success: true,
+					};
 				}
 			}
 
@@ -144,5 +157,3 @@ export const getBookings = cache(async (userId: string) => {
 		console.log(error);
 	}
 });
-
-

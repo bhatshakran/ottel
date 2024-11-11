@@ -21,17 +21,13 @@ export const runValidation = (a: string, b: string): boolean => {
 	if (a.length <= 0 || b.length <= 0) return false;
 	let isValid = false;
 	const today = currentDate();
-	console.log(today, "today");
-	console.log(a, "a");
 	if (today === a) {
-		console.log("Not possible to book for today");
 		return isValid;
 	}
 	let difference = null;
 	difference = dateDiffInDays(new Date(a), new Date(b));
 	if (difference) {
 		if (difference <= 0) {
-			console.log("Booking not possible, Kindly check your booking dates");
 			return isValid;
 		}
 	}
